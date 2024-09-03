@@ -1,16 +1,18 @@
 component MassSpringDamper
-  port_m = Flange()
-  port_sd = Flange()
-  damper = Damper(d=damping)
-  body = Mass(m=mass, g=gravity)
-  spring = Spring(k=stiffness)
-  parameter mass::JSML.Mass = 1000
-  parameter gravity::Acceleration = 0
-  parameter stiffness::TranslationalSpringConstant = 1000000
-  parameter damping::TranslationalDampingConstant = 1000
-  parameter initial_position::Position = 0
+    port_m = Flange()
+    port_sd = Flange()
+    damper = Damper(d=damping)
+    body = Mass(m=mass, g=gravity)
+    spring = Spring(k=stiffness)
+    parameter mass::JSML.Mass = 1000
+    parameter gravity::Acceleration = 0
+    parameter stiffness::TranslationalSpringConstant = 1000000
+    parameter damping::TranslationalDampingConstant = 1000
+    parameter initial_position::Real = 0.0
 relations
-  initial port_m.s = initial_position
-  connect(damper.flange_a, spring.flange_a, body.flange, port_m)
-  connect(port_sd, spring.flange_b, damper.flange_b)
+    initial port_m.s = initial_position
+    initial body.v = 0.0
+    initial body.a = 0.0
+    connect(damper.flange_a, spring.flange_a, body.flange, port_m)
+    connect(port_sd, spring.flange_b, damper.flange_b)
 end

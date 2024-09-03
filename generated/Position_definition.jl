@@ -5,37 +5,27 @@
 
 
 """
-   Spring(; name, k)
-
-## Parameters: 
-
-| Name         | Description                         | Units  |   Default value |
-| ------------ | ----------------------------------- | ------ | --------------- |
-| `k`         |                          | N/m  |   1000000 |
+   Position(; name)
 
 ## Connectors
 
- * `flange_a` - ([`Flange`](@ref))
- * `flange_b` - ([`Flange`](@ref))
+ * `flange` - ([`Flange`](@ref))
+ * `in` - This connector represents a real signal as an input to a component ([`RealInput`](@ref))
 """
-@component function Spring(; name, k::Union{Float64,Int64,Nothing}=1000000)
+@component function Position(; name)
   systems = @named begin
-    flange_a = __JSML__Flange()
-    flange_b = __JSML__Flange()
+    flange = __JSML__Flange()
   end
-  params = @parameters begin
-    (k::Float64 = k)
+  vars = @variables begin
+    in(t), [input = true]
   end
   eqs = Equation[
-    # Hooke's Law
-    flange_a.f ~ k * (flange_a.s - flange_b.s)
-    # Conservation of Linear Momentum
-    flange_a.f + flange_b.f ~ 0
+    in ~ flange.s
   ]
-  return ODESystem(eqs, t, [], params; systems, name)
+  return ODESystem(eqs, t, vars, []; systems, name)
 end
-export Spring
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,
+export Position
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Position)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

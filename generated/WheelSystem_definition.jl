@@ -5,37 +5,22 @@
 
 
 """
-   Spring(; name, k)
-
-## Parameters: 
-
-| Name         | Description                         | Units  |   Default value |
-| ------------ | ----------------------------------- | ------ | --------------- |
-| `k`         |                          | N/m  |   1000000 |
-
-## Connectors
-
- * `flange_a` - ([`Flange`](@ref))
- * `flange_b` - ([`Flange`](@ref))
+   WheelSystem(; name)
 """
-@component function Spring(; name, k::Union{Float64,Int64,Nothing}=1000000)
+@component function WheelSystem(; name)
   systems = @named begin
-    flange_a = __JSML__Flange()
-    flange_b = __JSML__Flange()
-  end
-  params = @parameters begin
-    (k::Float64 = k)
+    wheel = MassSpringDamper()
+    road_data = Road()
+    road = Position()
   end
   eqs = Equation[
-    # Hooke's Law
-    flange_a.f ~ k * (flange_a.s - flange_b.s)
-    # Conservation of Linear Momentum
-    flange_a.f + flange_b.f ~ 0
+    road.in ~ road_data.out
+    connect(road.flange, wheel.port_sd)
   ]
-  return ODESystem(eqs, t, [], params; systems, name)
+  return ODESystem(eqs, t, [], []; systems, name)
 end
-export Spring
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,
+export WheelSystem
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(WheelSystem)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

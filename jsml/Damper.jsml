@@ -1,13 +1,13 @@
 component Damper
-  flange_a = Flange()
-  flange_b = Flange()
-  parameter d::TranslationalDampingConstant = 1k
-  variable delta_s::Position
-  variable v::Real
+    flange_a = Flange()
+    flange_b = Flange()
+    parameter d::TranslationalDampingConstant = 1k
+    variable delta_s::Real
+    variable v::Real
 relations
-  delta_s = flange_a.s-flange_b.s
-  v = der(delta_s)
-  flange_a.f = v*d
-  # Conservation of Linear Momentum
-  flange_a.f+flange_b.f = 0
+    delta_s = flange_a.s-flange_b.s
+    v = der(delta_s)
+    flange_a.f = v*d
+    # Conservation of Linear Momentum
+    flange_a.f+flange_b.f = 0
 end

@@ -11,42 +11,36 @@
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `m`         |                          | --  |   1000 |
-| `g`         |                          | --  |   0 |
+| `m`         |                          | kg  |   1000 |
+| `g`         |                          | m/s2  |   0 |
 
 ## Connectors
 
- * `flange` - ([`MechanicalPort`](@ref))
+ * `flange` - ([`Flange`](@ref))
 
 ## Variables
 
 | Name         | Description                         | Units  | 
 | ------------ | ----------------------------------- | ------ | 
-| `s`         | Position                         | undefined  | 
-| `v`         | Velocity                         | undefined  | 
-| `a`         | Acceleration                         | undefined  | 
-| `f`         | Force                         | undefined  | 
+| `v`         | Velocity                         | m/s  | 
+| `a`         | Acceleration                         | m/s2  | 
 """
 @component function Mass(; name, m::Union{Float64,Int64,Nothing}=1000, g::Union{Float64,Int64,Nothing}=0)
   systems = @named begin
-    flange = MechanicalPort()
+    flange = __JSML__Flange()
   end
   vars = @variables begin
-    s(t), [description = "Position", guess = 0.]
     v(t), [description = "Velocity", guess = 0.]
     a(t), [description = "Acceleration", guess = 0.]
-    f(t), [description = "Force", guess = 0.]
   end
   params = @parameters begin
     (m::Float64 = m)
     (g::Float64 = g)
   end
   eqs = Equation[
-    v ~ flange.v
-    f ~ flange.f
-    D(s) ~ v
+    v ~ D(flange.s)
     D(v) ~ a
-    m * a ~ f + m * g
+    m * a ~ flange.f - m * g
   ]
   return ODESystem(eqs, t, vars, params; systems, name)
 end

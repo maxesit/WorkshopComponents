@@ -1,0 +1,7 @@
+component Position
+    flange = Flange()
+    in     = RealInput()
+
+relations
+    in     = flange.s 
+end

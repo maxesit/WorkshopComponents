@@ -1,11 +1,11 @@
 component SIR
-    variable S::Real 
-    variable I::Real
-    variable R::Real 
-
     parameter beta::Real  = 0.00010
     parameter gamma::Real = 0.2
 
+    variable S::Real 
+    variable I::Real
+    variable R::Real 
+    
 relations
     D(S) = - beta * S * I
     D(I) =   beta * S * I - gamma * I

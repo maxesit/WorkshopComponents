@@ -12,5 +12,6 @@ RuntimeGeneratedFunctions.init(@__MODULE__)
 
 
 
+include("Epidemiology_test.jl")
 include("SIR_test.jl")
 include("VanDerPol_test.jl")

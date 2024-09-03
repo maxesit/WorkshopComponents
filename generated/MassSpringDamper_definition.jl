@@ -15,7 +15,7 @@
 | `gravity`         |                          | m/s2  |   0 |
 | `stiffness`         |                          | N/m  |   1000000 |
 | `damping`         |                          | N.s/m  |   1000 |
-| `initial_position`         |                          | --  |   0 |
+| `initial_position`         |                          | m  |   0 |
 
 ## Connectors
 

@@ -22,8 +22,8 @@
 
 | Name         | Description                         | Units  | 
 | ------------ | ----------------------------------- | ------ | 
-| `delta_s`         |                          | undefined  | 
-| `v`         |                          | undefined  | 
+| `delta_s`         |                          | m  | 
+| `v`         |                          | m/s  | 
 """
 @component function Damper(; name, d::Union{Float64,Int64,Nothing}=1000)
   systems = @named begin

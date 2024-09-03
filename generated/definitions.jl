@@ -27,4 +27,5 @@ end
   f(t), [connect = Flow]
 end
 
+include("SIR_definition.jl")
 include("VanDerPol_definition.jl")

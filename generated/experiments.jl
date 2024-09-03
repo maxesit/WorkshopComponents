@@ -5,4 +5,5 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
+include("SIR_experiment.jl")
 include("VanDerPol_experiment.jl")

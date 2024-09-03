@@ -1,0 +1,26 @@
+component Mass
+    flange = MechanicalPort()
+
+    parameter m::Real = 1000.0
+    parameter g::Real = 0.0
+
+    # Position
+    variable s::Real
+
+    # Velocity
+    variable v::Real
+
+    # Acceleration
+    variable a::Real
+
+    # Force
+    variable f::Real
+
+relations
+    v = flange.v 
+    f = flange.f 
+    
+    D(s)  = v 
+    D(v)  = a 
+    m * a = f + m * g
+end

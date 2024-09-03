@@ -2,7 +2,7 @@ component Damper
     flange_a = MechanicalPort()
     flange_b = MechanicalPort()
 
-    parameter d::Real = 1000
+    parameter d::Real = 1000.0
 
     variable  v::Real
     variable  f::Real

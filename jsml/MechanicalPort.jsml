@@ -1,0 +1,4 @@
+connector MechanicalPort
+    potential v::Real
+    flow      f::Real
+end

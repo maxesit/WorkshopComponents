@@ -5,13 +5,13 @@
 
 
 """
-   Spring(; name, k)
+   Damper(; name, d)
 
 ## Parameters: 
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `k`         |                          | --  |   1000000 |
+| `d`         |                          | --  |   1000 |
 
 ## Connectors
 
@@ -22,31 +22,31 @@
 
 | Name         | Description                         | Units  | 
 | ------------ | ----------------------------------- | ------ | 
-| `delta_s`         |                          | undefined  | 
+| `v`         |                          | undefined  | 
 | `f`         |                          | undefined  | 
 """
-@component function Spring(; name, k::Union{Float64,Int64,Nothing}=1000000)
+@component function Damper(; name, d::Union{Float64,Int64,Nothing}=1000)
   systems = @named begin
     flange_a = MechanicalPort()
     flange_b = MechanicalPort()
   end
   vars = @variables begin
-    delta_s(t), [guess = 0.]
+    v(t), [guess = 0.]
     f(t), [guess = 0.]
   end
   params = @parameters begin
-    (k::Float64 = k)
+    (d::Float64 = d)
   end
   eqs = Equation[
-    D(delta_s) ~ flange_a.v - flange_b.v
-    f ~ k * delta_s
+    v ~ flange_a.v - flange_b.v
+    f ~ v * d
     flange_a.f ~ +f
     flange_b.f ~ -f
   ]
   return ODESystem(eqs, t, vars, params; systems, name)
 end
-export Spring
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,
+export Damper
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Damper)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

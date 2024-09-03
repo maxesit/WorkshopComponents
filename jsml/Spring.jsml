@@ -2,7 +2,7 @@ component Spring
     flange_a = MechanicalPort()
     flange_b = MechanicalPort()
     
-    parameter k::Real
+    parameter k::Real = 1000000
     
     variable delta_s::Real
     variable f::Real

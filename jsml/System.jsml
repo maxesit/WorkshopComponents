@@ -1,0 +1,14 @@
+component System
+    seat      = MassSpringDamper()
+    carbody   = MassSpringDamper()
+    wheel     = MassSpringDamper()
+    road_data = Road()
+    road      = Position()
+
+relations
+    connect(road.u, road_data.y)
+    connect(road.flange, wheel.port_sd)
+    connect(wheel.port_m, carbody.port_sd)
+    connect(carbody.port_m, seat.port_sd)
+    
+end

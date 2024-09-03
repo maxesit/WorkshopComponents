@@ -8,6 +8,7 @@
 include("Damper_experiment.jl")
 include("Epidemiology_experiment.jl")
 include("Mass_experiment.jl")
+include("MassSpringDamper_experiment.jl")
 include("SIR_experiment.jl")
 include("Spring_experiment.jl")
 include("VanDerPol_experiment.jl")

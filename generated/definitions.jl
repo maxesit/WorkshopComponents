@@ -30,6 +30,7 @@ end
 include("Damper_definition.jl")
 include("Epidemiology_definition.jl")
 include("Mass_definition.jl")
+include("MassSpringDamper_definition.jl")
 include("MechanicalPort_definition.jl")
 include("SIR_definition.jl")
 include("Spring_definition.jl")

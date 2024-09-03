@@ -37,16 +37,11 @@
     (damping::Float64 = damping)
     (initial_position::Float64 = initial_position)
   end
-  initialization_eqs = [
-    body.s ~ initial_position
-    body.v ~ 0
-    body.a ~ 0
-  ]
   eqs = Equation[
     connect(damper.flange_a, spring.flange_a, body.flange, port_m)
     connect(port_sd, spring.flange_b, damper.flange_b)
   ]
-  return ODESystem(eqs, t, [], params; systems, name, initialization_eqs)
+  return ODESystem(eqs, t, [], params; systems, name)
 end
 export MassSpringDamper
 Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(MassSpringDamper)) = print(io,

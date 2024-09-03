@@ -1,15 +1,10 @@
 component Spring
-    flange_a = MechanicalPort()
-    flange_b = MechanicalPort()
-    
-    parameter k::Real = 1000000.0
-    
-    variable delta_s::Real
-    variable f::Real
-
+  flange_a = Flange()
+  flange_b = Flange()
+  parameter k::TranslationalSpringConstant = 1M
 relations
-    D(delta_s) = flange_a.v - flange_b.v 
-    f          = k * delta_s
-    flange_a.f = +f 
-    flange_b.f = -f
+  # Hooke's Law
+  flange_a.f = k*(flange_a.s-flange_b.s)
+  # Conservation of Linear Momentum
+  flange_a.f+flange_b.f = 0
 end

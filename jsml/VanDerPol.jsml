@@ -1,13 +1,8 @@
 component VanDerPol
-
-    parameter mu::Real = 1.0
-    
-    variable x::Real
-    variable y::Real
-
+  parameter mu::Real = 1
+  variable x::Real
+  variable y::Real
 relations
-    D(y) = mu * ((1-x^2)*y - x)
-    D(x) = y
+  der(y) = mu*((1-x^2)*y-x)
+  der(x) = y
 end
-
-

@@ -1,14 +1,12 @@
 component Epidemiology
-    parameter k::Real = 1000
-    parameter F::Real = 100
-    parameter d::Real = 1
-    
-    variable  x::Real 
-    variable  x_dot::Real
-    variable  x_ddot::Real
-
+  parameter k::Real = 1000
+  parameter F::Real = 100
+  parameter d::Real = 1
+  variable x::Real
+  variable x_dot::Real
+  variable x_ddot::Real
 relations
-    D(x)     = x_dot
-    D(x_dot) = x_ddot
-    F        = d * x_dot + k * x
+  der(x) = x_dot
+  der(x_dot) = x_ddot
+  F = d*x_dot+k*x
 end

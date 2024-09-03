@@ -1,26 +1,13 @@
 component Mass
-    flange = MechanicalPort()
-
-    parameter m::Real = 1000.0
-    parameter g::Real = 0.0
-
-    # Position
-    variable s::Real
-
-    # Velocity
-    variable v::Real
-
-    # Acceleration
-    variable a::Real
-
-    # Force
-    variable f::Real
-
+  flange = Flange()
+  parameter m::JSML.Mass = 1000
+  parameter g::Acceleration = 0
+  # Velocity
+  variable v::Velocity
+  # Acceleration
+  variable a::Acceleration
 relations
-    v = flange.v 
-    f = flange.f 
-    
-    D(s)  = v 
-    D(v)  = a 
-    m * a = f + m * g
+  v = der(flange.s)
+  der(v) = a
+  m*a = flange.f-m*g
 end

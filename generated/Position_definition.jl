@@ -10,17 +10,17 @@
 ## Connectors
 
  * `flange` - ([`MechanicalPort`](@ref))
- * `s` - This connector represents a real signal as an input to a component ([`RealInput`](@ref))
+ * `u` - This connector represents a real signal as an input to a component ([`RealInput`](@ref))
 """
 @component function Position(; name)
   systems = @named begin
     flange = MechanicalPort()
   end
   vars = @variables begin
-    s(t), [input = true]
+    u(t), [input = true]
   end
   eqs = Equation[
-    D(s.u) ~ flange.v
+    D(u) ~ flange.v
   ]
   return ODESystem(eqs, t, vars, []; systems, name)
 end

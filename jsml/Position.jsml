@@ -1,7 +1,7 @@
 component Position
     flange = MechanicalPort()
-    s      = RealInput()
+    u      = RealInput()
 
 relations
-    D(s.u) = flange.v
+    D(u) = flange.v
 end

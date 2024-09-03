@@ -13,16 +13,11 @@
     road_data = Road()
     road = Position()
   end
-  initialization_eqs = [
-    wheel.body.s ~ 0.5
-    wheel.body.v ~ 0
-    wheel.body.a ~ 0
-  ]
   eqs = Equation[
-    road.s ~ road_data.ou
+    road.u ~ road_data.y
     connect(road.flange, wheel.port_sd)
   ]
-  return ODESystem(eqs, t, [], []; systems, name, initialization_eqs)
+  return ODESystem(eqs, t, [], []; systems, name)
 end
 export WheelSystem
 Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(WheelSystem)) = print(io,

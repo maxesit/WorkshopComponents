@@ -18,11 +18,11 @@
 
 ## Connectors
 
- * `ou` - This connector represents a real signal as an output from a component ([`RealOutput`](@ref))
+ * `y` - This connector represents a real signal as an output from a component ([`RealOutput`](@ref))
 """
 @component function Road(; name, bump::Union{Float64,Int64,Nothing}=0.2, freq::Union{Float64,Int64,Nothing}=0.5, loop::Union{Float64,Int64,Nothing}=10, offset::Union{Float64,Int64,Nothing}=1)
   vars = @variables begin
-    ou(t), [output = true]
+    y(t), [output = true]
   end
   params = @parameters begin
     (bump::Float64 = bump)
@@ -31,7 +31,7 @@
     (offset::Float64 = offset)
   end
   eqs = Equation[
-    ou.u ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
+    y ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
   ]
   return ODESystem(eqs, t, vars, params; systems = [], name)
 end

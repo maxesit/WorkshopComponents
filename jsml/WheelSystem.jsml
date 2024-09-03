@@ -4,9 +4,6 @@ component WheelSystem
     road      = Position()
 
 relations 
-    initial wheel.body.s = 0.5
-    initial wheel.body.v = 0.0
-    initial wheel.body.a = 0.0
-    connect(road.s, road_data.ou)
+    connect(road.u, road_data.y)
     connect(road.flange, wheel.port_sd)
 end

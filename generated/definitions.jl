@@ -7,8 +7,7 @@
 
 using ModelingToolkit
 using ModelingToolkit: t_nounits as t
-using DifferentialEquations
-using OrdinaryDiffEq: ReturnCode.Success
+using OrdinaryDiffEq
 using RuntimeGeneratedFunctions
 RuntimeGeneratedFunctions.init(@__MODULE__)
 
@@ -25,6 +24,10 @@ end
 @connector __JSML__Flange begin
   s(t), []
   f(t), [connect = Flow]
+end
+@connector __JSML__HydraulicPort begin
+  dm(t), [description = "Mass flow rate from the connection point into the component", connect = Flow]
+  p(t), [description = "Thermodynamic pressure in the connection point"]
 end
 
 include("Damper_definition.jl")

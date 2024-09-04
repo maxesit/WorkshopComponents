@@ -5,8 +5,7 @@
 ### Instead, update the JSML source code and regenerate this file
 
 using ModelingToolkit
-using DifferentialEquations
-using OrdinaryDiffEq: ReturnCode.Success
+using OrdinaryDiffEq
 using RuntimeGeneratedFunctions
 RuntimeGeneratedFunctions.init(@__MODULE__)
 

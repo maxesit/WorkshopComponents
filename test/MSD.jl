@@ -8,3 +8,4 @@ prob = ODEProblem(msd, u0, tspan)
 sol  = solve(prob)
 using Plots
 plot(sol)
+savefig("MSD.png")

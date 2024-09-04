@@ -1,0 +1,7 @@
+component WheelSystem
+    wheel = MassSpringDamper(initial_position = 0.5)
+    road  = Road()
+
+relations
+    connect(road.out, wheel.body.flange.s)
+end

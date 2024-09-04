@@ -5,7 +5,7 @@
 
 
 """
-   Epidemiology(; name, k, F, d)
+   SpringDamper(; name, k, F, d)
 
 ## Parameters: 
 
@@ -23,7 +23,7 @@
 | `x_dot`         |                          | undefined  | 
 | `x_ddot`         |                          | undefined  | 
 """
-@component function Epidemiology(; name, k::Union{Float64,Int64,Nothing}=1000, F::Union{Float64,Int64,Nothing}=100, d::Union{Float64,Int64,Nothing}=1)
+@component function SpringDamper(; name, k::Union{Float64,Int64,Nothing}=1000, F::Union{Float64,Int64,Nothing}=100, d::Union{Float64,Int64,Nothing}=1)
   vars = @variables begin
     x(t), [guess = 0.]
     x_dot(t), [guess = 0.]
@@ -41,8 +41,8 @@
   ]
   return ODESystem(eqs, t, vars, params; systems = [], name)
 end
-export Epidemiology
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Epidemiology)) = print(io,
+export SpringDamper
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(SpringDamper)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

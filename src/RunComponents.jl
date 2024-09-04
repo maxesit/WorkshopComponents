@@ -32,7 +32,7 @@ sol  = solve(prob)
 using Plots
 plot(sol)
 
-# ----------------------------Epidemiology------------------------------ #
+# ----------------------------SpringDamper------------------------------ #
 
 using WorkshopComponents
 using ModelingToolkit, DifferentialEquations

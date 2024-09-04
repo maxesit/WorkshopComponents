@@ -1,4 +1,4 @@
-component Epidemiology
+component SpringDamper
   parameter k::Real = 1000
   parameter F::Real = 100
   parameter d::Real = 1

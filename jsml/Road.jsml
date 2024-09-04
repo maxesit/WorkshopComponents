@@ -1,0 +1,17 @@
+component Road
+    out = RealOutput()
+
+    parameter bump::Real   = 0.2
+    parameter freq::Real   = 0.5
+    parameter loop::Real   = 10.0
+    parameter offset::Real = 1.0
+
+relations
+    out =   ifelse(mod(t, loop) < offset, 
+                0.0, 
+                ifelse(mod(t, loop)-offset > freq,
+                    0.0,
+                    bump*(1 - cos(2*π*(t-offset)/freq))
+                )
+            )
+end

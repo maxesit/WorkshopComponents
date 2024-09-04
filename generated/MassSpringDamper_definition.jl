@@ -43,7 +43,7 @@
     body.a ~ 0
   ]
   eqs = Equation[
-    connect(damper.flange_a, spring.flange_a, body.flange, port_m)
+    connect(port_m, damper.flange_a, spring.flange_a, body.flange)
     connect(port_sd, spring.flange_b, damper.flange_b)
   ]
   return ODESystem(eqs, t, [], params; systems, name, initialization_eqs)

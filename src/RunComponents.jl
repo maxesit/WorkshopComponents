@@ -72,17 +72,19 @@ using ModelingToolkit, DifferentialEquations
 @mtkbuild whsys = WorkshopComponents.WheelSystem()
 u0 = []
 tspan = [0.0,20.0]
+#=
 initialization_eqns = [
 	#whsys.wheel.body.s ~ 0.5
 	whsys.wheel.body.v ~ 0.0
 	whsys.wheel.body.a ~ 0.0
 ]
+=#
 prob = ODEProblem(whsys, u0, tspan)#; initialization_eqns)
 sol  = solve(prob)
 using Plots
 plot(sol)
-plot(sol; idxs=whsys.road.out, label= "sys.road.u")
-plot!(sol; idxs=whsys.wheel.body.s, label= "sys.wheel.body.s")
+plot(sol; idxs=whsys.road.o, label= "wsys.road.o")
+plot!(sol; idxs=whsys.wheel.body.s, label= "whsys.wheel.body.s")
 
 # ---------------------------------System------------------------------- #
 

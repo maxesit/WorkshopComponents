@@ -68,7 +68,7 @@ using ModelingToolkit, DifferentialEquations
 u0 = []
 tspan = [0.0,20.0]
 initialization_eqns = [
-    whsys.wheel.port_m.s ~ 0.5
+    whsys.wheel.port_sd.s ~ 0.5
 	whsys.wheel.body.v ~ 0.0
 	whsys.wheel.body.a ~ 0.0
 ]
@@ -76,7 +76,7 @@ prob = ODEProblem(whsys, u0, tspan; initialization_eqns)
 sol  = solve(prob)
 using Plots
 plot(sol)
-plot(sol; idxs=whsys.road.in, label= "sys.road.in")
+plot(sol; idxs=whsys.road_data.out, label= "sys.road_data.out")
 plot!(sol; idxs=whsys.wheel.body.flange.s, label= "sys.wheel.body.flange.s")
 
 # ---------------------------------System------------------------------- #
@@ -117,4 +117,9 @@ plot!(sol; idxs=sys.seat.body.s, label= "sys.seat.body.s")
     initial body.s = initial_position
     initial body.v = 0.0
     initial body.a = 0.0
+=#
+
+#=
+    connect(road.in, road_data.out)
+    connect(road.flange, wheel.port_sd)
 =#

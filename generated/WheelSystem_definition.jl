@@ -11,11 +11,8 @@
   systems = @named begin
     wheel = MassSpringDamper()
     road_data = Road()
-    road = Position()
   end
   eqs = Equation[
-    road.in ~ road_data.out
-    connect(road.flange, wheel.port_sd)
   ]
   return ODESystem(eqs, t, [], []; systems, name)
 end

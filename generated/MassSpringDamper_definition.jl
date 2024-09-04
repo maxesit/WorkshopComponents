@@ -38,7 +38,7 @@
     (initial_position::Float64 = initial_position)
   end
   initialization_eqs = [
-    port_m.s ~ initial_position
+    body.flange.s ~ initial_position
     body.v ~ 0
     body.a ~ 0
   ]

@@ -38,9 +38,7 @@
     (initial_position::Float64 = initial_position)
   end
   initialization_eqs = [
-    body.flange.s ~ initial_position
-    body.v ~ 0
-    body.a ~ 0
+    port_m.s ~ initial_position
   ]
   eqs = Equation[
     connect(damper.flange_a, spring.flange_a, body.flange, port_m)

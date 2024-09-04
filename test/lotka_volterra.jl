@@ -7,4 +7,4 @@ sol = solve(prob)
 
 using Plots
 plot(sol)
-savefig("plots.png")
+savefig("lotka_voltera.png")

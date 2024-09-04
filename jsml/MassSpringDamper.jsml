@@ -8,9 +8,13 @@ component MassSpringDamper
     parameter gravity::Acceleration = 0
     parameter stiffness::TranslationalSpringConstant = 1000000
     parameter damping::TranslationalDampingConstant = 1000
-    parameter initial_position::JSML.Position = 0.0
+    parameter initial_position_m::JSML.Position = 0.5
+    parameter initial_position_sd::JSML.Position= 0.0
 relations
-    initial port_m.s = initial_position
+    initial port_m.s = initial_position_m
+    initial body.v   = 0.0
+    initial body.a   = 0.0
+    initial port_sd.s= initial_position_sd
     connect(damper.flange_a, spring.flange_a, body.flange, port_m)
     connect(port_sd, spring.flange_b, damper.flange_b)
 end

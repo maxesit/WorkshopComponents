@@ -12,3 +12,4 @@ prob = ODEProblem(sd, u0, tspan)
 sol  = solve(prob)
 using Plots
 plot(sol)
+savefig("spring_damper.png")

@@ -5,7 +5,7 @@
 
 
 """
-   MassSpringDamper(; name, mass, gravity, stiffness, damping, initial_position)
+   MassSpringDamper(; name, mass, gravity, stiffness, damping, initial_position_m, initial_position_sd)
 
 ## Parameters: 
 
@@ -15,14 +15,15 @@
 | `gravity`         |                          | m/s2  |   0 |
 | `stiffness`         |                          | N/m  |   1000000 |
 | `damping`         |                          | N.s/m  |   1000 |
-| `initial_position`         |                          | m  |   0 |
+| `initial_position_m`         |                          | m  |   0.5 |
+| `initial_position_sd`         |                          | m  |   0 |
 
 ## Connectors
 
  * `port_m` - ([`Flange`](@ref))
  * `port_sd` - ([`Flange`](@ref))
 """
-@component function MassSpringDamper(; name, mass::Union{Float64,Int64,Nothing}=1000, gravity::Union{Float64,Int64,Nothing}=0, stiffness::Union{Float64,Int64,Nothing}=1000000, damping::Union{Float64,Int64,Nothing}=1000, initial_position::Union{Float64,Int64,Nothing}=0)
+@component function MassSpringDamper(; name, mass::Union{Float64,Int64,Nothing}=1000, gravity::Union{Float64,Int64,Nothing}=0, stiffness::Union{Float64,Int64,Nothing}=1000000, damping::Union{Float64,Int64,Nothing}=1000, initial_position_m::Union{Float64,Int64,Nothing}=0.5, initial_position_sd::Union{Float64,Int64,Nothing}=0)
   systems = @named begin
     port_m = __JSML__Flange()
     port_sd = __JSML__Flange()
@@ -35,10 +36,14 @@
     (gravity::Float64 = gravity)
     (stiffness::Float64 = stiffness)
     (damping::Float64 = damping)
-    (initial_position::Float64 = initial_position)
+    (initial_position_m::Float64 = initial_position_m)
+    (initial_position_sd::Float64 = initial_position_sd)
   end
   initialization_eqs = [
-    port_m.s ~ initial_position
+    port_m.s ~ initial_position_m
+    body.v ~ 0
+    body.a ~ 0
+    port_sd.s ~ initial_position_sd
   ]
   eqs = Equation[
     connect(damper.flange_a, spring.flange_a, body.flange, port_m)

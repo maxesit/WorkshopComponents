@@ -12,3 +12,4 @@ prob = ODEProblem(sir, u0, tspan)
 sol  = solve(prob)
 using Plots
 plot(sol)
+savefig("SIR.png")

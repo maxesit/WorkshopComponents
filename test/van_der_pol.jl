@@ -7,3 +7,4 @@ sol = solve(prob)
 
 using Plots
 plot(sol)
+savefig("VdP.png")

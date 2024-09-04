@@ -5,8 +5,7 @@
 ### Instead, update the JSML source code and regenerate this file
 
 using ModelingToolkit
-using DifferentialEquations
-using OrdinaryDiffEq: ReturnCode.Success
+using OrdinaryDiffEq
 using RuntimeGeneratedFunctions
 RuntimeGeneratedFunctions.init(@__MODULE__)
 
@@ -14,6 +13,7 @@ RuntimeGeneratedFunctions.init(@__MODULE__)
 
 include("Damper_test.jl")
 include("Epidemiology_test.jl")
+include("LotkaVolterra_test.jl")
 include("Mass_test.jl")
 include("MassSpringDamper_test.jl")
 include("Position_test.jl")

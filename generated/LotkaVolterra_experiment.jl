@@ -4,8 +4,4 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
-@connector MechanicalPort begin
-  v(t), []
-  f(t), [connect = Flow]
-end
-export MechanicalPort
+

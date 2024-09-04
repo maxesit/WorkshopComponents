@@ -1,0 +1,11 @@
+component LotkaVolterra
+  parameter a::Real = 1.5
+  parameter b::Real = 1.0
+  parameter c::Real = 3.0
+  parameter d::Real = 1.0
+  variable x::Real
+  variable y::Real
+relations
+  der(x) = a * x - b * x * y
+  der(y) = -c * y + d * x * y
+end

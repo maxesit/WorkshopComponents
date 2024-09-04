@@ -11,21 +11,21 @@
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `mass`         |                          | --  |   1000 |
-| `gravity`         |                          | --  |   0 |
-| `stiffness`         |                          | --  |   1000000 |
-| `damping`         |                          | --  |   1000 |
-| `initial_position`         |                          | --  |   0 |
+| `mass`         |                          | kg  |   1000 |
+| `gravity`         |                          | m/s2  |   0 |
+| `stiffness`         |                          | N/m  |   1000000 |
+| `damping`         |                          | N.s/m  |   1000 |
+| `initial_position`         |                          | m  |   0 |
 
 ## Connectors
 
- * `port_m` - ([`MechanicalPort`](@ref))
- * `port_sd` - ([`MechanicalPort`](@ref))
+ * `port_m` - ([`Flange`](@ref))
+ * `port_sd` - ([`Flange`](@ref))
 """
 @component function MassSpringDamper(; name, mass::Union{Float64,Int64,Nothing}=1000, gravity::Union{Float64,Int64,Nothing}=0, stiffness::Union{Float64,Int64,Nothing}=1000000, damping::Union{Float64,Int64,Nothing}=1000, initial_position::Union{Float64,Int64,Nothing}=0)
   systems = @named begin
-    port_m = MechanicalPort()
-    port_sd = MechanicalPort()
+    port_m = __JSML__Flange()
+    port_sd = __JSML__Flange()
     damper = Damper(d=damping)
     body = Mass(m=mass, g=gravity)
     spring = Spring(k=stiffness)
@@ -37,11 +37,16 @@
     (damping::Float64 = damping)
     (initial_position::Float64 = initial_position)
   end
+  initialization_eqs = [
+    port_m.s ~ initial_position
+    body.v ~ 0
+    body.a ~ 0
+  ]
   eqs = Equation[
     connect(damper.flange_a, spring.flange_a, body.flange, port_m)
     connect(port_sd, spring.flange_b, damper.flange_b)
   ]
-  return ODESystem(eqs, t, [], params; systems, name)
+  return ODESystem(eqs, t, [], params; systems, name, initialization_eqs)
 end
 export MassSpringDamper
 Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(MassSpringDamper)) = print(io,

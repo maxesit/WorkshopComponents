@@ -11,39 +11,28 @@
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `k`         |                          | --  |   1000000 |
+| `k`         |                          | N/m  |   1000000 |
 
 ## Connectors
 
- * `flange_a` - ([`MechanicalPort`](@ref))
- * `flange_b` - ([`MechanicalPort`](@ref))
-
-## Variables
-
-| Name         | Description                         | Units  | 
-| ------------ | ----------------------------------- | ------ | 
-| `delta_s`         |                          | undefined  | 
-| `f`         |                          | undefined  | 
+ * `flange_a` - ([`Flange`](@ref))
+ * `flange_b` - ([`Flange`](@ref))
 """
 @component function Spring(; name, k::Union{Float64,Int64,Nothing}=1000000)
   systems = @named begin
-    flange_a = MechanicalPort()
-    flange_b = MechanicalPort()
-  end
-  vars = @variables begin
-    delta_s(t), [guess = 0.]
-    f(t), [guess = 0.]
+    flange_a = __JSML__Flange()
+    flange_b = __JSML__Flange()
   end
   params = @parameters begin
     (k::Float64 = k)
   end
   eqs = Equation[
-    D(delta_s) ~ flange_a.v - flange_b.v
-    f ~ k * delta_s
-    flange_a.f ~ +f
-    flange_b.f ~ -f
+    # Hooke's Law
+    flange_a.f ~ k * (flange_a.s - flange_b.s)
+    # Conservation of Linear Momentum
+    flange_a.f + flange_b.f ~ 0
   ]
-  return ODESystem(eqs, t, vars, params; systems, name)
+  return ODESystem(eqs, t, [], params; systems, name)
 end
 export Spring
 Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,

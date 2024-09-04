@@ -11,37 +11,38 @@
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `d`         |                          | --  |   1000 |
+| `d`         |                          | N.s/m  |   1000 |
 
 ## Connectors
 
- * `flange_a` - ([`MechanicalPort`](@ref))
- * `flange_b` - ([`MechanicalPort`](@ref))
+ * `flange_a` - ([`Flange`](@ref))
+ * `flange_b` - ([`Flange`](@ref))
 
 ## Variables
 
 | Name         | Description                         | Units  | 
 | ------------ | ----------------------------------- | ------ | 
+| `delta_s`         |                          | m  | 
 | `v`         |                          | undefined  | 
-| `f`         |                          | undefined  | 
 """
 @component function Damper(; name, d::Union{Float64,Int64,Nothing}=1000)
   systems = @named begin
-    flange_a = MechanicalPort()
-    flange_b = MechanicalPort()
+    flange_a = __JSML__Flange()
+    flange_b = __JSML__Flange()
   end
   vars = @variables begin
+    delta_s(t), [guess = 0.]
     v(t), [guess = 0.]
-    f(t), [guess = 0.]
   end
   params = @parameters begin
     (d::Float64 = d)
   end
   eqs = Equation[
-    v ~ flange_a.v - flange_b.v
-    f ~ v * d
-    flange_a.f ~ +f
-    flange_b.f ~ -f
+    delta_s ~ flange_a.s - flange_b.s
+    v ~ D(delta_s)
+    flange_a.f ~ v * d
+    # Conservation of Linear Momentum
+    flange_a.f + flange_b.f ~ 0
   ]
   return ODESystem(eqs, t, vars, params; systems, name)
 end

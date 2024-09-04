@@ -55,12 +55,12 @@ using ModelingToolkit, DifferentialEquations
 @mtkbuild msd = WorkshopComponents.MassSpringDamper()
 u0 = []
 initialization_eqns = [
-    msd.body.s ~ 0.0
+    #msd.body.s ~ 0.0
     msd.body.v ~ 0.0
     msd.body.a ~ 0.0
 ]
 tspan = [0.0,10.0]
-prob = ODEProblem(msd, u0, tspan; initialization_eqns)
+prob = ODEProblem(msd, u0, tspan)#; initialization_eqns)
 sol  = solve(prob)
 using Plots
 plot(sol)

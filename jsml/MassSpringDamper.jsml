@@ -11,6 +11,8 @@ component MassSpringDamper
   parameter initial_position::Position = 0
 relations
   initial port_m.s = initial_position
+  initial body.v   = 0.0
+  initial body.a   = 0.0
   connect(damper.flange_a, spring.flange_a, body.flange, port_m)
   connect(port_sd, spring.flange_b, damper.flange_b)
 end

@@ -1,5 +1,5 @@
 component Road
-    out = RealOutput()
+    o = RealOutput()
 
     parameter bump::Real   = 0.2
     parameter freq::Real   = 0.5
@@ -7,7 +7,7 @@ component Road
     parameter offset::Real = 1.0
 
 relations
-    out =   ifelse(mod(t, loop) < offset, 
+    o =   ifelse(mod(t, loop) < offset, 
                 0.0, 
                 ifelse(mod(t, loop)-offset > freq,
                     0.0,

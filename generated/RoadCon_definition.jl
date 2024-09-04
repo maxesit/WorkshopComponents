@@ -5,38 +5,27 @@
 
 
 """
-   Road(; name, bump, freq, loop, offset)
-
-## Parameters: 
-
-| Name         | Description                         | Units  |   Default value |
-| ------------ | ----------------------------------- | ------ | --------------- |
-| `bump`         |                          | --  |   0.2 |
-| `freq`         |                          | --  |   0.5 |
-| `loop`         |                          | --  |   10 |
-| `offset`         |                          | --  |   1 |
+   RoadCon(; name)
 
 ## Connectors
 
- * `o` - This connector represents a real signal as an output from a component ([`RealOutput`](@ref))
+ * `i` - This connector represents a real signal as an input to a component ([`RealInput`](@ref))
+ * `flange` - ([`Flange`](@ref))
 """
-@component function Road(; name, bump::Union{Float64,Int64,Nothing}=0.2, freq::Union{Float64,Int64,Nothing}=0.5, loop::Union{Float64,Int64,Nothing}=10, offset::Union{Float64,Int64,Nothing}=1)
-  vars = @variables begin
-    o(t), [output = true]
+@component function RoadCon(; name)
+  systems = @named begin
+    flange = __JSML__Flange()
   end
-  params = @parameters begin
-    (bump::Float64 = bump)
-    (freq::Float64 = freq)
-    (loop::Float64 = loop)
-    (offset::Float64 = offset)
+  vars = @variables begin
+    i(t), [input = true]
   end
   eqs = Equation[
-    o ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
+    flange.s ~ i
   ]
-  return ODESystem(eqs, t, vars, params; systems = [], name)
+  return ODESystem(eqs, t, vars, []; systems, name)
 end
-export Road
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Road)) = print(io,
+export RoadCon
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(RoadCon)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

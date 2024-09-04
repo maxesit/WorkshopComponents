@@ -1,7 +1,0 @@
-component WheelSystem
-    wheel     = MassSpringDamper()
-    road_data = Road()
-
-relations
-    connect(wheel.port_sd.s, road_data.out)
-end

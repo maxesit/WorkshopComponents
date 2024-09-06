@@ -1,0 +1,14 @@
+component Mass
+    flange = Flange()
+    
+    parameter m::JSML.Mass    = 1000
+    parameter g::Acceleration = 0
+
+    variable v::Velocity
+    variable a::Acceleration
+
+relations
+    v = der(Flange.s)
+    a = der(v)
+    m*a = flange.f - m*g
+end

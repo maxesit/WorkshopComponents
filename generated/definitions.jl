@@ -29,3 +29,8 @@ end
   dm(t), [description = "Mass flow rate from the connection point into the component", connect = Flow]
   p(t), [description = "Thermodynamic pressure in the connection point"]
 end
+
+include("Damper_definition.jl")
+include("Mass_definition.jl")
+include("MassSpringDamper_definition.jl")
+include("Spring_definition.jl")

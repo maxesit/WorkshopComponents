@@ -1,0 +1,6 @@
+component RoadWheel
+    i = RealInput()
+    flange = Flange()
+relations
+    flange.s = i
+end

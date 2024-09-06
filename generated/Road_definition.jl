@@ -5,35 +5,38 @@
 
 
 """
-   Spring(; name, k)
+   Road(; name, bump, freq, offset, loop)
 
 ## Parameters: 
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `k`         |                          | N/m  |   1000000 |
+| `bump`         |                          | --  |   0.2 |
+| `freq`         |                          | --  |   0.5 |
+| `offset`         |                          | --  |   1 |
+| `loop`         |                          | --  |   10 |
 
 ## Connectors
 
- * `flange_a` - ([`Flange`](@ref))
- * `flange_b` - ([`Flange`](@ref))
+ * `out` - This connector represents a real signal as an output from a component ([`RealOutput`](@ref))
 """
-@component function Spring(; name, k::Union{Float64,Int64,Nothing}=1000000)
-  systems = @named begin
-    flange_a = __JSML__Flange()
-    flange_b = __JSML__Flange()
+@component function Road(; name, bump::Union{Float64,Int64,Nothing}=0.2, freq::Union{Float64,Int64,Nothing}=0.5, offset::Union{Float64,Int64,Nothing}=1, loop::Union{Float64,Int64,Nothing}=10)
+  vars = @variables begin
+    out(t), [output = true]
   end
   params = @parameters begin
-    (k::Float64 = k)
+    (bump::Float64 = bump)
+    (freq::Float64 = freq)
+    (offset::Float64 = offset)
+    (loop::Float64 = loop)
   end
   eqs = Equation[
-    flange_a.f ~ k * (-flange_a.s + flange_b.s)
-    flange_a.f + flange_b.f ~ 0
+    out ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
   ]
-  return ODESystem(eqs, t, [], params; systems, name)
+  return ODESystem(eqs, t, vars, params; systems = [], name)
 end
-export Spring
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,
+export Road
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Road)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

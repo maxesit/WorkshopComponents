@@ -13,7 +13,7 @@ component MassSpringDamper
     parameter initial_position::JSML.Position = 0
 
 relations 
-    initial body.flange_Mass.s = initial_position
+    initial flange_Mass.s = initial_position
     initial body.v = 0.0
     initial body.a = 0.0
 

@@ -8,7 +8,7 @@ component Mass
     variable a::Acceleration
 
 relations
-    v = der(Flange.s)
+    v = der(flange.s)
     a = der(v)
     m*a = flange.f - m*g
 end

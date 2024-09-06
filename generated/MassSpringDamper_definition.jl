@@ -38,7 +38,7 @@
     (initial_position::Float64 = initial_position)
   end
   initialization_eqs = [
-    body.flange_Mass.s ~ initial_position
+    flange_Mass.s ~ initial_position
     body.v ~ 0
     body.a ~ 0
   ]

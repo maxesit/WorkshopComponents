@@ -38,7 +38,7 @@
     (g::Float64 = g)
   end
   eqs = Equation[
-    v ~ D(Flange.s)
+    v ~ D(flange.s)
     a ~ D(v)
     m * a ~ flange.f - m * g
   ]

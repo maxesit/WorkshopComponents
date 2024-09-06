@@ -8,4 +8,7 @@
 include("Damper_experiment.jl")
 include("Mass_experiment.jl")
 include("MassSpringDamper_experiment.jl")
+include("Road_experiment.jl")
+include("RoadWheel_experiment.jl")
 include("Spring_experiment.jl")
+include("WheelSystem_experiment.jl")

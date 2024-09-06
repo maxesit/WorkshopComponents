@@ -4,49 +4,28 @@ authors = ["Marko Polic marko.polic@juliahub.com, JuliaHub Inc."]
 version = "0.0.1"
 
 [deps]
-DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 DynamicQuantities = "06fc5a27-2a28-4c7c-a15d-362465fb6821"
+JuliaSimCompiler = "8391cb6b-4921-5777-4e45-fd9aab8cb88d"
 ModelingToolkit = "961ee093-0014-501f-94e3-6117800e7a78"
 OrdinaryDiffEq = "1dea7af3-3e70-54e6-95c3-0bf5283fa5ed"
 PrecompileTools = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
 RuntimeGeneratedFunctions = "7e49a35a-f44a-4d26-94aa-eba1b4ca6b47"
-CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
-DataInterpolations = "82cc6244-b520-54b8-b5a6-8a565e85f1d0"
-FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-JuliaSimCompiler = "8391cb6b-4921-5777-4e45-fd9aab8cb88d"
-LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-MeshIO = "7269a6da-0436-5bbc-96c2-40638cbb6118"
-ModelingToolkitStandardLibrary = "16a59e39-deab-5bd0-87e4-056b12336739"
-Rotations = "6038ab10-8711-5258-84ad-4b1120ba62dc"
-SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
-StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
-
-
-[compat]
-DifferentialEquations = "7"
-DynamicQuantities = "0.13"
-ModelingToolkit = "9"
-OrdinaryDiffEq = "6"
-PrecompileTools = "1"
-RuntimeGeneratedFunctions = "0.5"
-Test = "1"
-CoordinateTransformations = "0.6"
-DataInterpolations = "5"
-FileIO = "1"
-JuliaSimCompiler = "0.1.12"
-LinearAlgebra = "1.6"
-MeshIO = "0.4"
-ModelingToolkitStandardLibrary = "2.7.2"
-Rotations = "1.4"
-SparseArrays = "1"
-StaticArrays = "1"
-julia = "1"
 
 [weakdeps]
 Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
 
 [extensions]
 Render = ["Makie"]
+
+[compat]
+DynamicQuantities = "1"
+JuliaSimCompiler = "0.1.19"
+ModelingToolkit = "9"
+OrdinaryDiffEq = "6"
+PrecompileTools = "1"
+RuntimeGeneratedFunctions = "0.5"
+Test = "1"
+julia = "1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

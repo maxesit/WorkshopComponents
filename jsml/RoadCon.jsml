@@ -1,7 +1,0 @@
-component RoadCon 
-    i = RealInput()
-    flange = Flange()
-
-relations 
-    flange.s = i 
-end

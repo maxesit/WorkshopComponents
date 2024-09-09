@@ -1,8 +1,6 @@
 component WheelSystem
     wheel = MassSpringDamper(initial_position = 0.5)
     road = Road()
-    road_wheel = RoadWheel()
 relations
-    connect(road.out, road_wheel.i)
-    connect(road_wheel.flange, wheel.flange_SD)
+    connect(road.flange, wheel.flange_SD)
 end

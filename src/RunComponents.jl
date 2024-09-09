@@ -125,6 +125,26 @@ plot(sol; idxs=sys.body.flange.s, label = "sys.body.flange.s")
 plot!(sol; idxs=sys.body.v, label = "sys.body.v")
 plot!(sol; idxs=sys.body.a, label = "sys.body.a")
 
+plot!(sol; idxs=sys.ground.flange.s, label = "sys.ground.flange.s")
+plot!(sol; idxs=sys.spring.flange_a.f, label="sys.spring.flange_a.f")
+plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")
+
+# ---------------------------------------------------------------------- #
+
+using WorkshopComponents
+using ModelingToolkit, OrdinaryDiffEq
+
+@mtkbuild sys = WorkshopComponents.MassSystem()
+u0 = []
+tspan = [0.0,20.0]
+prob = ODEProblem(sys, u0, tspan)
+sol = solve(prob; dtmax = 0.1, reltol = 1e-10)
+using Plots
+plot(sol)
+plot(sol; idxs=sys.body.flange.s, label = "sys.body.flange.s")
+plot!(sol; idxs=sys.body.v, label = "sys.body.v")
+plot!(sol; idxs=sys.body.a, label = "sys.body.a")
+
 plot!(sol; idxs=sys.ground.out, label = "sys.ground.out")
 plot!(sol; idxs=sys.spring.flange_a.f, label="sys.spring.flange_a.f")
 plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")

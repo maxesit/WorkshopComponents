@@ -18,11 +18,11 @@
 
 ## Connectors
 
- * `out` - This connector represents a real signal as an output from a component ([`RealOutput`](@ref))
+ * `flange` - ([`Flange`](@ref))
 """
 @component function Road(; name, bump::Union{Float64,Int64,Nothing}=0.2, freq::Union{Float64,Int64,Nothing}=0.5, offset::Union{Float64,Int64,Nothing}=1, loop::Union{Float64,Int64,Nothing}=10)
-  vars = @variables begin
-    out(t), [output = true]
+  systems = @named begin
+    flange = __JSML__Flange()
   end
   params = @parameters begin
     (bump::Float64 = bump)
@@ -31,9 +31,9 @@
     (loop::Float64 = loop)
   end
   eqs = Equation[
-    out ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
+    flange.s ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
   ]
-  return ODESystem(eqs, t, vars, params; systems = [], name)
+  return ODESystem(eqs, t, [], params; systems, name)
 end
 export Road
 Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Road)) = print(io,

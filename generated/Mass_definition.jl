@@ -40,7 +40,7 @@
   eqs = Equation[
     v ~ D(flange.s)
     a ~ D(v)
-    m * a ~ flange.f - m * g
+    a ~ flange.f / m - g
   ]
   return ODESystem(eqs, t, vars, params; systems, name)
 end

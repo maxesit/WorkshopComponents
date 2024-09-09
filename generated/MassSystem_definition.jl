@@ -5,27 +5,24 @@
 
 
 """
-   RoadWheel(; name)
-
-## Connectors
-
- * `i` - This connector represents a real signal as an input to a component ([`RealInput`](@ref))
- * `flange` - ([`Flange`](@ref))
+   MassSystem(; name)
 """
-@component function RoadWheel(; name)
+@component function MassSystem(; name)
   systems = @named begin
-    flange = __JSML__Flange()
+    body = Mass(m=1000, g=0)
+    ground = Road()
   end
-  vars = @variables begin
-    i(t), [input = true]
-  end
-  eqs = Equation[
-    flange.s ~ i
+  initialization_eqs = [
+    body.v ~ 0
+    body.a ~ 0
   ]
-  return ODESystem(eqs, t, vars, []; systems, name)
+  eqs = Equation[
+    connect(ground.flange, body.flange)
+  ]
+  return ODESystem(eqs, t, [], []; systems, name, initialization_eqs)
 end
-export RoadWheel
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(RoadWheel)) = print(io,
+export MassSystem
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(MassSystem)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

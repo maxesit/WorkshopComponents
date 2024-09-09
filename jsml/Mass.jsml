@@ -10,5 +10,5 @@ component Mass
 relations
     v = der(flange.s)
     a = der(v)
-    m*a = flange.f - m*g
+    a = flange.f/m - g
 end

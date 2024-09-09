@@ -12,7 +12,6 @@
     body = Mass(m=1000, g=0)
     spring = Spring(k=10000)
     ground = Road()
-    ground_spring = RoadWheel()
   end
   initialization_eqs = [
     body.flange.s ~ 0.5
@@ -21,8 +20,7 @@
   ]
   eqs = Equation[
     connect(body.flange, spring.flange_a)
-    connect(spring.flange_b, ground_spring.flange)
-    ground_spring.i ~ ground.out
+    connect(spring.flange_b, ground.flange)
   ]
   return ODESystem(eqs, t, [], []; systems, name, initialization_eqs)
 end

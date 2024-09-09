@@ -2,13 +2,12 @@ component SpringSystem
     body = Mass(m = 1000, g = 0)
     spring = Spring(k = 10000)
     ground = Road()
-    ground_spring = RoadWheel()
 
 relations
     initial body.flange.s = 0.5
     initial body.v = 0.0
     initial body.a = 0.0
     connect(body.flange, spring.flange_a)
-    connect(spring.flange_b,ground_spring.flange)
-    connect(ground_spring.i, ground.out)
+    connect(spring.flange_b,ground.flange)
+
 end

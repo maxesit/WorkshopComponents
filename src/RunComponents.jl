@@ -81,7 +81,7 @@ plot!(sol; idxs=whsys.wheel.port_m.s, label= "whsys.wheel.port_m.s")
 # ---------------------------------System------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, DifferentialEquations
+using ModelingToolkit, OrdinaryDiffEq
 @mtkbuild sys = WorkshopComponents.System()
 u0 = []
 tspan = [0.0,20.0]
@@ -111,7 +111,23 @@ plot!(sol; idxs=sys.seat.body.s, label= "sys.seat.body.s")
 
 # ---------------------------------------------------------------------- #
 
+using WorkshopComponents
+using ModelingToolkit, OrdinaryDiffEq
 
+@mtkbuild sys = WorkshopComponents.SpringSystem()
+u0 = []
+tspan = [0.0,20.0]
+prob = ODEProblem(sys, u0, tspan)
+sol = solve(prob)
+using Plots
+plot(sol)
+plot(sol; idxs=sys.body.flange.s, label = "sys.body.flange.s")
+plot!(sol; idxs=sys.body.v, label = "sys.body.v")
+plot!(sol; idxs=sys.body.a, label = "sys.body.a")
+
+plot!(sol; idxs=sys.ground.out, label = "sys.ground.out")
+plot!(sol; idxs=sys.spring.flange_a.f, label="sys.spring.flange_a.f")
+plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")
 #=
     initial body.s = initial_position
     initial body.v = 0.0

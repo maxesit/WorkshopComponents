@@ -5,37 +5,29 @@
 
 
 """
-   Spring(; name, k, def_length)
-
-## Parameters: 
-
-| Name         | Description                         | Units  |   Default value |
-| ------------ | ----------------------------------- | ------ | --------------- |
-| `k`         |                          | N/m  |   1000000 |
-| `def_length`         |                          | m  |   0.5 |
-
-## Connectors
-
- * `flange_a` - ([`Flange`](@ref))
- * `flange_b` - ([`Flange`](@ref))
+   SpringSystem(; name)
 """
-@component function Spring(; name, k::Union{Float64,Int64,Nothing}=1000000, def_length::Union{Float64,Int64,Nothing}=0.5)
+@component function SpringSystem(; name)
   systems = @named begin
-    flange_a = __JSML__Flange()
-    flange_b = __JSML__Flange()
+    body = Mass(m=1000, g=0)
+    spring = Spring(k=10000)
+    ground = Road()
+    ground_spring = RoadWheel()
   end
-  params = @parameters begin
-    (k::Float64 = k)
-    (def_length::Float64 = def_length)
-  end
-  eqs = Equation[
-    flange_a.f ~ k * (def_length - (flange_a.s - flange_b.s))
-    flange_a.f + flange_b.f ~ 0
+  initialization_eqs = [
+    body.flange.s ~ 0.5
+    body.v ~ 0
+    body.a ~ 0
   ]
-  return ODESystem(eqs, t, [], params; systems, name)
+  eqs = Equation[
+    connect(body.flange, spring.flange_a)
+    connect(spring.flange_b, ground_spring.flange)
+    ground_spring.i ~ ground.out
+  ]
+  return ODESystem(eqs, t, [], []; systems, name, initialization_eqs)
 end
-export Spring
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,
+export SpringSystem
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(SpringSystem)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

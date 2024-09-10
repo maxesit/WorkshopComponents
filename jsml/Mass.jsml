@@ -13,8 +13,8 @@ component Mass
     variable a::Acceleration
 
 relations
-    flange_a.s = s - L/2
-    flange_b.s = s + L/2
+    flange_a.s = s + L/2
+    flange_b.s = s - L/2
     v = der(s)
     a = der(v)
     m*a = flange_a.f + flange_b.f

@@ -5,25 +5,29 @@
 
 
 """
-   Ground(; name)
+   MassSpringDamper(; name)
 
-Ground represented by a function
-
-## Connectors
-
- * `flange` - ([`Flange`](@ref))
+A system with a Mass, Damper, Spring and a Fixed component
 """
-@component function Ground(; name)
+@component function MassSpringDamper(; name)
   systems = @named begin
-    flange = __JSML__Flange()
+    damper = Damper(d=1000)
+    spring = Spring(c=1000000, s_rel0=0.5)
+    body = Mass(m=1000, L=0)
+    ground = Ground()
   end
-  eqs = Equation[
-    flange.s ~ ifelse(t < 0.5, 0, (t - 0.5) / 4)
+  initialization_eqs = [
+    body.flange_b.s ~ 0.5
+    body.flange_b.f ~ 0
   ]
-  return ODESystem(eqs, t, [], []; systems, name)
+  eqs = Equation[
+    connect(spring.flange_a, damper.flange_a, body.flange_b)
+    connect(spring.flange_b, damper.flange_b, ground.flange)
+  ]
+  return ODESystem(eqs, t, [], []; systems, name, initialization_eqs)
 end
-export Ground
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Ground)) = print(io,
+export MassSpringDamper
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(MassSpringDamper)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

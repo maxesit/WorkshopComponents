@@ -4,5 +4,5 @@ component Ground
     flange = Flange()
 
 relations
-    flange.s = t/4
+    flange.s = ifelse(t<0.5, 0.0, (t-0.5)/4)
 end

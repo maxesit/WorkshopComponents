@@ -44,8 +44,8 @@ Sliding mass
     (m::Float64 = m)
   end
   eqs = Equation[
-    flange_a.s ~ s - L / 2
-    flange_b.s ~ s + L / 2
+    flange_a.s ~ s + L / 2
+    flange_b.s ~ s - L / 2
     v ~ D(s)
     a ~ D(v)
     m * a ~ flange_a.f + flange_b.f

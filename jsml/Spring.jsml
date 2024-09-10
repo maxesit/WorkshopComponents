@@ -2,18 +2,18 @@
 
 component Spring
     flange_a = Flange()
-    flange_b = FLange()
+    flange_b = Flange()
     
     # Unstretched spring length
-    parameter s_rel0::Distance = 0
+    parameter s_rel0::Distance = 0.5
     parameter c::TranslationalSpringConstant = 1M
 
     variable s_rel::Distance
     variable f::JSML.Force
 
 relations
-    s_rel = flange_b.s - flange_a.s
+    s_rel = flange_a.s - flange_b.s
     f = c * (s_rel - s_rel0)
-    flange_b.f = f
-    flange_a.f = -f
+    flange_b.f = -f
+    flange_a.f = f
 end

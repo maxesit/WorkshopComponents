@@ -114,6 +114,30 @@ plot!(sol; idxs=sys.seat.body.s, label= "sys.seat.body.s")
 using WorkshopComponents
 using ModelingToolkit, OrdinaryDiffEq
 
+@mtkbuild sys = WorkshopComponents.MassSpringDamper()
+u0 = []
+tspan = [0.0,4.0]
+prob = ODEProblem(sys, u0, tspan)
+sol  = solve(prob)
+
+using Plots
+plot(sol)
+plot!(sol; idxs=sys.ground.flange.s, label = "sys.ground.flange.s")
+plot!(sol; idxs=sys.spring.flange_a.f, label = "sys.spring.flange_a.f")
+
+plot(sol; idxs=sys.road.u, label= "sys.road.s.u")
+plot!(sol; idxs=sys.wheel.body.s, label= "sys.wheel.body.s")
+plot!(sol; idxs=sys.carbody.body.s, label= "sys.carbody.body.s")
+plot!(sol; idxs=sys.seat.body.s, label= "sys.seat.body.s")
+
+savefig("MassSpringDamper.png")
+
+
+# ---------------------------------------------------------------------- #
+
+using WorkshopComponents
+using ModelingToolkit, OrdinaryDiffEq
+
 @mtkbuild sys = WorkshopComponents.SpringSystem()
 u0 = []
 tspan = [0.0,2.0]

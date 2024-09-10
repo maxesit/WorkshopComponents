@@ -5,16 +5,15 @@
 
 
 """
-   Spring(; name, s_rel0, c)
+   Damper(; name, d)
 
-Linear 1D translational spring
+Linear 1D translational damper
 
 ## Parameters: 
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `s_rel0`         | Unstretched spring length                         | m  |   0.5 |
-| `c`         |                          | N/m  |   1000000 |
+| `d`         |                          | s-1  |    |
 
 ## Connectors
 
@@ -25,32 +24,36 @@ Linear 1D translational spring
 
 | Name         | Description                         | Units  | 
 | ------------ | ----------------------------------- | ------ | 
-| `s_rel`         |                          | m  | 
-| `f`         |                          | N  | 
+| `lossPower`         |                          | W  | 
+| `s_rel`         | Relative distance (= flange_b.s - flange_a.s)                         | m  | 
+| `v_rel`         | Relative velocity (= der(s_rel))                         | m/s  | 
+| `f`         | Forces between flanges (= flange_b.f)                         | N  | 
 """
-@component function Spring(; name, s_rel0::Union{Float64,Int64,Nothing}=0.5, c::Union{Float64,Int64,Nothing}=1000000)
+@component function Damper(; name, d::Union{Float64,Int64,Nothing}=nothing)
   systems = @named begin
     flange_a = __JSML__Flange()
     flange_b = __JSML__Flange()
   end
   vars = @variables begin
-    s_rel(t), [guess = 0.]
-    f(t), [guess = 0.]
+    lossPower(t), [guess = 0.]
+    s_rel(t), [description = "Relative distance (= flange_b.s - flange_a.s)", guess = 0.]
+    v_rel(t), [description = "Relative velocity (= der(s_rel))", guess = 0.]
+    f(t), [description = "Forces between flanges (= flange_b.f)", guess = 0.]
   end
   params = @parameters begin
-    (s_rel0::Float64 = s_rel0), [description = "Unstretched spring length"]
-    (c::Float64 = c)
+    (d::Float64 = d)
   end
   eqs = Equation[
     s_rel ~ flange_a.s - flange_b.s
-    f ~ c * (s_rel - s_rel0)
+    v_rel ~ D(s_rel)
+    f ~ d * v_rel
     flange_b.f ~ -f
     flange_a.f ~ f
   ]
   return ODESystem(eqs, t, vars, params; systems, name)
 end
-export Spring
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,
+export Damper
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Damper)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

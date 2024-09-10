@@ -11,3 +11,5 @@ Julia (`file_name.jl`) files under the directory `test` showcase how to run the 
 * LotkaVolterra
 * SpringDamper
 * MassSpringDamper (acausal)
+* WheelSystem
+* VehicleSystem

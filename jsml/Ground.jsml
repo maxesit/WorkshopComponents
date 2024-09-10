@@ -1,0 +1,8 @@
+# Ground represented by a function
+
+component Ground 
+    flange = Flange()
+
+relations
+    flange.s = t/4
+end

@@ -5,5 +5,6 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
+include("Ground_experiment.jl")
 include("Mass_experiment.jl")
 include("Spring_experiment.jl")

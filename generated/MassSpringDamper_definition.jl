@@ -5,31 +5,45 @@
 
 
 """
-   MassSpringDamper(; name)
+   MassSpringDamper(; name, initial_pos, spring_height)
 
 A system with a Mass, Damper, Spring and a Fixed component
 
+## Parameters: 
+
+| Name         | Description                         | Units  |   Default value |
+| ------------ | ----------------------------------- | ------ | --------------- |
+| `initial_pos`         |                          | m  |   0.5 |
+| `spring_height`         |                          | m  |   0.5 |
+
 ## Connectors
 
+ * `flange_a` - ([`Flange`](@ref))
  * `flange_b` - ([`Flange`](@ref))
 """
-@component function MassSpringDamper(; name)
+@component function MassSpringDamper(; name, initial_pos::Union{Float64,Int64,Nothing}=0.5, spring_height::Union{Float64,Int64,Nothing}=0.5)
   systems = @named begin
+    flange_a = __JSML__Flange()
     flange_b = __JSML__Flange()
     damper = Damper(d=1000)
-    spring = Spring(c=1000000, s_rel0=0.5)
+    spring = Spring(c=1000000, s_rel0=spring_height)
     body = Mass(m=1000, L=0)
   end
+  params = @parameters begin
+    (initial_pos::Float64 = initial_pos)
+    (spring_height::Float64 = spring_height)
+  end
   initialization_eqs = [
-    body.flange_b.s ~ 0.5
+    body.flange_b.s ~ initial_pos
     body.v ~ 0
     body.flange_b.f ~ 0
   ]
   eqs = Equation[
+    connect(flange_a, body.flange_a)
     connect(spring.flange_a, damper.flange_a, body.flange_b)
     connect(spring.flange_b, damper.flange_b, flange_b)
   ]
-  return ODESystem(eqs, t, [], []; systems, name, initialization_eqs)
+  return ODESystem(eqs, t, [], params; systems, name, initialization_eqs)
 end
 export MassSpringDamper
 Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(MassSpringDamper)) = print(io,

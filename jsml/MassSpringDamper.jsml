@@ -2,12 +2,16 @@
 
 component MassSpringDamper
     damper = Damper(d = 1000)
-    spring = Spring(c = 1000000, s_rel0 = 0.5)
+    spring = Spring(c = 1000000, s_rel0 = spring_height)
     body = Mass(m = 1000, L = 0)
+    flange_a = Flange()
     flange_b = Flange()
-
+    parameter initial_pos::Length = 0.5
+    parameter spring_height::Length = 0.5
+    
 relations
-    initial body.flange_b.s = 0.5
+    connect(flange_a, body.flange_a)
+    initial body.flange_b.s = initial_pos
     initial body.v = 0.0
     initial body.flange_b.f = 0.0
     connect(spring.flange_a, damper.flange_a, body.flange_b)

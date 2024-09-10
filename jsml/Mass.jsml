@@ -1,3 +1,5 @@
+# Sliding mass
+
 component Mass
     flange_a = Flange()
     flange_b = Flange()

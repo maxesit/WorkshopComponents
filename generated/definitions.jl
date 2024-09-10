@@ -31,3 +31,4 @@ end
 end
 
 include("Mass_definition.jl")
+include("Spring_definition.jl")

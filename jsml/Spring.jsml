@@ -1,0 +1,19 @@
+# Linear 1D translational spring
+
+component Spring
+    flange_a = Flange()
+    flange_b = FLange()
+    
+    # Unstretched spring length
+    parameter s_rel0::Distance = 0
+    parameter c::TranslationalSpringConstant = 1M
+
+    variable s_rel::Distance
+    variable f::JSML.Force
+
+relations
+    s_rel = flange_b.s - flange_a.s
+    f = c * (s_rel - s_rel0)
+    flange_b.f = f
+    flange_a.f = -f
+end

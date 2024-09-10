@@ -5,55 +5,50 @@
 
 
 """
-   Mass(; name, L, m)
+   Spring(; name, s_rel0, c)
 
-Sliding mass
+Linear 1D translational spring
 
 ## Parameters: 
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `L`         |                          | m  |   0 |
-| `m`         |                          | kg  |   1 |
+| `s_rel0`         | Unstretched spring length                         | m  |   0 |
+| `c`         |                          | N/m  |   1000000 |
 
 ## Connectors
 
  * `flange_a` - ([`Flange`](@ref))
- * `flange_b` - ([`Flange`](@ref))
 
 ## Variables
 
 | Name         | Description                         | Units  | 
 | ------------ | ----------------------------------- | ------ | 
-| `s`         | Center of mass                         | m  | 
-| `v`         |                          | m/s  | 
-| `a`         |                          | m/s2  | 
+| `s_rel`         |                          | m  | 
+| `f`         |                          | N  | 
 """
-@component function Mass(; name, L::Union{Float64,Int64,Nothing}=0, m::Union{Float64,Int64,Nothing}=1)
+@component function Spring(; name, s_rel0::Union{Float64,Int64,Nothing}=0, c::Union{Float64,Int64,Nothing}=1000000)
   systems = @named begin
     flange_a = __JSML__Flange()
-    flange_b = __JSML__Flange()
   end
   vars = @variables begin
-    s(t), [description = "Center of mass", guess = 0.]
-    v(t), [guess = 0.]
-    a(t), [guess = 0.]
+    s_rel(t), [guess = 0.]
+    f(t), [guess = 0.]
   end
   params = @parameters begin
-    (L::Float64 = L)
-    (m::Float64 = m)
+    (s_rel0::Float64 = s_rel0), [description = "Unstretched spring length"]
+    (c::Float64 = c)
   end
   eqs = Equation[
-    flange_a.s ~ s - L / 2
-    flange_b.s ~ s + L / 2
-    v ~ D(s)
-    a ~ D(v)
-    m * a ~ flange_a.f + flange_b.f
+    s_rel ~ flange_b.s - flange_a.s
+    f ~ c * (s_rel - s_rel0)
+    flange_b.f ~ f
+    flange_a.f ~ -f
   ]
   return ODESystem(eqs, t, vars, params; systems, name)
 end
-export Mass
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Mass)) = print(io,
+export Spring
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Spring)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

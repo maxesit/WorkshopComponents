@@ -11,11 +11,4 @@ RuntimeGeneratedFunctions.init(@__MODULE__)
 
 
 
-include("Damper_test.jl")
 include("Mass_test.jl")
-include("MassSpringDamper_test.jl")
-include("MassSystem_test.jl")
-include("Road_test.jl")
-include("Spring_test.jl")
-include("SpringSystem_test.jl")
-include("WheelSystem_test.jl")

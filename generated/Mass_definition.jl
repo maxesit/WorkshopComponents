@@ -5,42 +5,48 @@
 
 
 """
-   Mass(; name, m, g)
+   Mass(; name, L, m)
 
 ## Parameters: 
 
 | Name         | Description                         | Units  |   Default value |
 | ------------ | ----------------------------------- | ------ | --------------- |
-| `m`         |                          | kg  |   1000 |
-| `g`         |                          | m/s2  |   0 |
+| `L`         |                          | m  |   0 |
+| `m`         |                          | kg  |   1 |
 
 ## Connectors
 
- * `flange` - ([`Flange`](@ref))
+ * `flange_a` - ([`Flange`](@ref))
+ * `flange_b` - ([`Flange`](@ref))
 
 ## Variables
 
 | Name         | Description                         | Units  | 
 | ------------ | ----------------------------------- | ------ | 
+| `s`         | Center of mass                         | m  | 
 | `v`         |                          | m/s  | 
 | `a`         |                          | m/s2  | 
 """
-@component function Mass(; name, m::Union{Float64,Int64,Nothing}=1000, g::Union{Float64,Int64,Nothing}=0)
+@component function Mass(; name, L::Union{Float64,Int64,Nothing}=0, m::Union{Float64,Int64,Nothing}=1)
   systems = @named begin
-    flange = __JSML__Flange()
+    flange_a = __JSML__Flange()
+    flange_b = __JSML__Flange()
   end
   vars = @variables begin
+    s(t), [description = "Center of mass", guess = 0.]
     v(t), [guess = 0.]
     a(t), [guess = 0.]
   end
   params = @parameters begin
+    (L::Float64 = L)
     (m::Float64 = m)
-    (g::Float64 = g)
   end
   eqs = Equation[
-    v ~ D(flange.s)
+    flange_a.s ~ s - L / 2
+    flange_b.s ~ s + L / 2
+    v ~ D(s)
     a ~ D(v)
-    flange.f ~ (a + g) * m
+    m * a ~ flange_a.f + flange_b.f
   ]
   return ODESystem(eqs, t, vars, params; systems, name)
 end

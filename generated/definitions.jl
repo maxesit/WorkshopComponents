@@ -30,11 +30,4 @@ end
   p(t), [description = "Thermodynamic pressure in the connection point"]
 end
 
-include("Damper_definition.jl")
 include("Mass_definition.jl")
-include("MassSpringDamper_definition.jl")
-include("MassSystem_definition.jl")
-include("Road_definition.jl")
-include("Spring_definition.jl")
-include("SpringSystem_definition.jl")
-include("WheelSystem_definition.jl")

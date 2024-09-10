@@ -1,14 +1,19 @@
 component Mass
-    flange = Flange()
-    
-    parameter m::JSML.Mass    = 1000
-    parameter g::Acceleration = 0
+    flange_a = Flange()
+    flange_b = Flange()
 
+    parameter L::Length = 0
+    parameter m::JSML.Mass = 1
+
+    # Center of mass
+    variable s::Position
     variable v::Velocity
     variable a::Acceleration
 
 relations
-    v = der(flange.s)
+    flange_a.s = s - L/2
+    flange_b.s = s + L/2
+    v = der(s)
     a = der(v)
-    flange.f = (a + g) * m
+    m*a = flange_a.f + flange_b.f
 end

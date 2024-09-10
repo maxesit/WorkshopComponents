@@ -30,7 +30,16 @@ end
   p(t), [description = "Thermodynamic pressure in the connection point"]
 end
 
+include("Damper_definition.jl")
+include("FixedGround_definition.jl")
+include("Ground_definition.jl")
 include("LotkaVolterra_definition.jl")
+include("Mass_definition.jl")
+include("MassSpringDamper_definition.jl")
+include("MassSpringDamperTest_definition.jl")
 include("SIR_definition.jl")
+include("Spring_definition.jl")
 include("SpringDamper_definition.jl")
+include("System_definition.jl")
 include("VanDerPol_definition.jl")
+include("WheelSystem_definition.jl")

@@ -1,0 +1,15 @@
+# A system with a Mass, Damper, Spring and a Fixed component | Standalone test
+
+component MassSpringDamperTest
+    damper = Damper(d = 1000)
+    spring = Spring(c = 1000000, s_rel0 = 0.5)
+    body = Mass(m = 1000, L = 0)
+    ground = FixedGround()
+
+relations
+    initial body.flange_b.s = 0.5
+    initial body.v = 0.0
+    initial body.flange_b.f = 0.0
+    connect(spring.flange_a, damper.flange_a, body.flange_b)
+    connect(spring.flange_b, damper.flange_b, ground.flange)
+end

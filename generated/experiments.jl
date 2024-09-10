@@ -5,7 +5,16 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
+include("Damper_experiment.jl")
+include("FixedGround_experiment.jl")
+include("Ground_experiment.jl")
 include("LotkaVolterra_experiment.jl")
+include("Mass_experiment.jl")
+include("MassSpringDamper_experiment.jl")
+include("MassSpringDamperTest_experiment.jl")
 include("SIR_experiment.jl")
+include("Spring_experiment.jl")
 include("SpringDamper_experiment.jl")
+include("System_experiment.jl")
 include("VanDerPol_experiment.jl")
+include("WheelSystem_experiment.jl")

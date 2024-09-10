@@ -1,0 +1,7 @@
+# Ground represented by a constant function
+
+component FixedGround
+    flange_a = Flange()
+relations
+    flange_a.s = 0.0
+end

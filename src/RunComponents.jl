@@ -4,7 +4,8 @@ Pkg.instantiate()
 # ----------------------------VanDerPol-------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, DifferentialEquations
+using ModelingToolkit, OrdinaryDiffEq
+
 @mtkbuild vdp = WorkshopComponents.VanDerPol()
 u0 = [
     vdp.x => -2.0,
@@ -19,7 +20,8 @@ plot(sol)
 # --------------------------------SIR----------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, DifferentialEquations
+using ModelingToolkit, OrdinaryDiffEq
+
 @mtkbuild sir = WorkshopComponents.SIR()
 u0 = [
     sir.S =>  10000.0,
@@ -35,7 +37,8 @@ plot(sol)
 # ----------------------------SpringDamper------------------------------ #
 
 using WorkshopComponents
-using ModelingToolkit, DifferentialEquations
+using ModelingToolkit, OrdinaryDiffEq
+
 @mtkbuild epi = WorkshopComponents.Epidemiology()
 u0 = [
     epi.x      =>  0.0,
@@ -51,11 +54,53 @@ plot(sol)
 # ---------------------------------MSD---------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, DifferentialEquations
-@mtkbuild msd = WorkshopComponents.MassSpringDamper()
+using ModelingToolkit, OrdinaryDiffEq
+
+@mtkbuild sys = WorkshopComponents.MassSpringDamperTest()
 u0 = []
-tspan = [0.0,10.0]
-prob = ODEProblem(msd, u0, tspan)
+tspan = [0.0,4.0]
+prob = ODEProblem(sys, u0, tspan)
 sol  = solve(prob)
+
 using Plots
 plot(sol)
+plot!(sol; idxs=sys.ground.flange_a.s, label = "sys.ground.flange_a.s")
+savefig("MassSpringDamper.png")
+
+# -----------------------------WheelSystem------------------------------ #
+
+using WorkshopComponents
+using ModelingToolkit, OrdinaryDiffEq
+
+@mtkbuild sys = WorkshopComponents.WheelSystem()
+u0 = []
+tspan = [0.0, 20.0]
+prob = ODEProblem(sys, u0, tspan)
+sol  = solve(prob, dtmax = 0.001)
+
+using Plots
+plot(sol)
+plot!(sol; idxs=sys.ground.flange_a.s, label = "sys.ground.flange_a.s")
+savefig("WheelSystem_20s.png")
+
+# --------------------------------System-------------------------------- #
+
+using WorkshopComponents
+using ModelingToolkit, OrdinaryDiffEq
+
+@mtkbuild sys = WorkshopComponents.System()
+u0 = []
+tspan = [0.0, 20.0]
+prob = ODEProblem(sys, u0, tspan)
+sol  = solve(prob, dtmax = 0.001)
+
+using Plots
+plot(sol; idxs=sys.ground.flange_a.s, label = "sys.ground")
+plot!(sol;idxs=sys.wheel.flange_a.s, label= "sys.wheel.flange_a.s")
+plot!(sol;idxs=sys.chassis.flange_a.s, label="sys.chassis.flange_a.s")
+plot!(sol;idxs=sys.seat.flange_a.s, label="sys.seat.flange_a.s")
+
+savefig("System_20s.png")
+
+
+# ---------------------------------MSD---------------------------------- #

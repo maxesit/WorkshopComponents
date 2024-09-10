@@ -31,7 +31,7 @@
     (loop::Float64 = loop)
   end
   eqs = Equation[
-    flange.s ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
+    flange.s ~ t / 4
   ]
   return ODESystem(eqs, t, [], params; systems, name)
 end

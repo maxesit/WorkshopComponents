@@ -8,6 +8,6 @@ relations
     initial body.v = 0.0
     initial body.a = 0.0
     connect(body.flange, spring.flange_a)
-    connect(spring.flange_b,ground.flange)
+    connect(spring.flange_b, ground.flange)
 
 end

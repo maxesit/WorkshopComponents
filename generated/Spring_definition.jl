@@ -29,7 +29,7 @@
     (def_length::Float64 = def_length)
   end
   eqs = Equation[
-    flange_a.f ~ k * (def_length - (flange_a.s - flange_b.s))
+    flange_a.f ~ -k * (def_length - (flange_a.s - flange_b.s))
     flange_a.f + flange_b.f ~ 0
   ]
   return ODESystem(eqs, t, [], params; systems, name)

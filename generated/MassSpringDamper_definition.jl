@@ -13,7 +13,7 @@
 | ------------ | ----------------------------------- | ------ | --------------- |
 | `mass`         |                          | kg  |   1000 |
 | `gravity`         |                          | m/s2  |   0 |
-| `stiffness`         |                          | N/m  |   1000000 |
+| `stiffness`         |                          | N/m  |   10000 |
 | `damping`         |                          | N.s/m  |   1000 |
 | `initial_position`         |                          | m  |   0 |
 
@@ -22,7 +22,7 @@
  * `flange_Mass` - ([`Flange`](@ref))
  * `flange_SD` - ([`Flange`](@ref))
 """
-@component function MassSpringDamper(; name, mass::Union{Float64,Int64,Nothing}=1000, gravity::Union{Float64,Int64,Nothing}=0, stiffness::Union{Float64,Int64,Nothing}=1000000, damping::Union{Float64,Int64,Nothing}=1000, initial_position::Union{Float64,Int64,Nothing}=0)
+@component function MassSpringDamper(; name, mass::Union{Float64,Int64,Nothing}=1000, gravity::Union{Float64,Int64,Nothing}=0, stiffness::Union{Float64,Int64,Nothing}=10000, damping::Union{Float64,Int64,Nothing}=1000, initial_position::Union{Float64,Int64,Nothing}=0)
   systems = @named begin
     flange_Mass = __JSML__Flange()
     flange_SD = __JSML__Flange()
@@ -38,7 +38,7 @@
     (initial_position::Float64 = initial_position)
   end
   initialization_eqs = [
-    flange_Mass.s ~ initial_position
+    body.flange.s ~ initial_position
     body.v ~ 0
     body.a ~ 0
   ]

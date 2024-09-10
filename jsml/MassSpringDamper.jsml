@@ -8,12 +8,12 @@ component MassSpringDamper
 
     parameter mass::JSML.Mass = 1000
     parameter gravity::Acceleration = 0
-    parameter stiffness::TranslationalSpringConstant = 1000000
+    parameter stiffness::TranslationalSpringConstant = 10000
     parameter damping::TranslationalDampingConstant = 1000
     parameter initial_position::JSML.Position = 0
 
 relations 
-    initial flange_Mass.s = initial_position
+    initial body.flange.s = initial_position
     initial body.v = 0.0
     initial body.a = 0.0
 

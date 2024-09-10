@@ -69,9 +69,9 @@ using WorkshopComponents
 using ModelingToolkit, OrdinaryDiffEq
 @mtkbuild whsys = WorkshopComponents.WheelSystem()
 u0 = []
-tspan = [0.0,20.0]
+tspan = [0.0,4.0]
 prob = ODEProblem(whsys, u0, tspan)
-sol  = solve(prob)
+sol  = solve(prob; dtmax = 0.1)
 using Plots
 plot(sol)
 plot(sol; idxs=whsys.road.o, label= "wsys.road.o")
@@ -116,9 +116,9 @@ using ModelingToolkit, OrdinaryDiffEq
 
 @mtkbuild sys = WorkshopComponents.SpringSystem()
 u0 = []
-tspan = [0.0,20.0]
+tspan = [0.0,2.0]
 prob = ODEProblem(sys, u0, tspan)
-sol = solve(prob)
+sol = solve(prob, dtmax = 0.0001)
 using Plots
 plot(sol)
 plot(sol; idxs=sys.body.flange.s, label = "sys.body.flange.s")
@@ -126,7 +126,7 @@ plot!(sol; idxs=sys.body.v, label = "sys.body.v")
 plot!(sol; idxs=sys.body.a, label = "sys.body.a")
 
 plot!(sol; idxs=sys.ground.flange.s, label = "sys.ground.flange.s")
-plot!(sol; idxs=sys.spring.flange_a.f, label="sys.spring.flange_a.f")
+plot(sol; idxs=sys.spring.flange_a.f, label="sys.spring.flange_a.f")
 plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")
 
 # ---------------------------------------------------------------------- #
@@ -152,4 +152,14 @@ plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")
     initial body.s = initial_position
     initial body.v = 0.0
     initial body.a = 0.0
+=#
+#=
+    flange.s =  ifelse(mod(t, loop) < offset,
+                0.0,
+                ifelse(mod(t,loop)-offset > freq,
+                    0.0,
+                    bump*(1 - cos(2*π*(t-offset)/freq))
+                )
+            )
+
 =#

@@ -5,22 +5,37 @@
 
 
 """
-   Ground(; name)
+   Ground(; name, bump, freq, offset, loop)
 
 Ground represented by a function
 
+## Parameters: 
+
+| Name         | Description                         | Units  |   Default value |
+| ------------ | ----------------------------------- | ------ | --------------- |
+| `bump`         |                          | --  |   0.2 |
+| `freq`         |                          | --  |   0.5 |
+| `offset`         |                          | --  |   1 |
+| `loop`         |                          | --  |   10 |
+
 ## Connectors
 
- * `flange` - ([`Flange`](@ref))
+ * `flange_a` - ([`Flange`](@ref))
 """
-@component function Ground(; name)
+@component function Ground(; name, bump::Union{Float64,Int64,Nothing}=0.2, freq::Union{Float64,Int64,Nothing}=0.5, offset::Union{Float64,Int64,Nothing}=1, loop::Union{Float64,Int64,Nothing}=10)
   systems = @named begin
-    flange = __JSML__Flange()
+    flange_a = __JSML__Flange()
+  end
+  params = @parameters begin
+    (bump::Float64 = bump)
+    (freq::Float64 = freq)
+    (offset::Float64 = offset)
+    (loop::Float64 = loop)
   end
   eqs = Equation[
-    flange.s ~ ifelse(t < 0.5, 0, (t - 0.5) / 4)
+    flange_a.s ~ ifelse(mod(t, loop) < offset, 0, ifelse(mod(t, loop) - offset > freq, 0, bump * (1 - cos(2 * π * (t - offset) / freq))))
   ]
-  return ODESystem(eqs, t, [], []; systems, name)
+  return ODESystem(eqs, t, [], params; systems, name)
 end
 export Ground
 Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(Ground)) = print(io,

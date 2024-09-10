@@ -1,0 +1,7 @@
+component WheelSystem
+    wheel = MassSpringDamper()
+    ground = Ground()
+
+relations 
+    connect(wheel.flange_b, ground.flange_a)
+end

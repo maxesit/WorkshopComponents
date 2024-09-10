@@ -31,7 +31,10 @@ end
 end
 
 include("Damper_definition.jl")
+include("FixedGround_definition.jl")
 include("Ground_definition.jl")
 include("Mass_definition.jl")
 include("MassSpringDamper_definition.jl")
+include("MassSpringDamperTest_definition.jl")
 include("Spring_definition.jl")
+include("WheelSystem_definition.jl")

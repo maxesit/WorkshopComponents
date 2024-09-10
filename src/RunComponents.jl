@@ -53,32 +53,50 @@ using WorkshopComponents
 
 # ---------------------------------MSD---------------------------------- #
 
-using WorkshopComponents
-using ModelingToolkit, DifferentialEquations
-@mtkbuild msd = WorkshopComponents.MassSpringDamper()
-u0 = []
-tspan = [0.0,10.0]
-prob = ODEProblem(msd, u0, tspan)#; initialization_eqns)
-sol  = solve(prob)
-using Plots
-plot(sol)
-
-# ------------------------------WheelSys-------------------------------- #
 
 using WorkshopComponents
 using ModelingToolkit, OrdinaryDiffEq
-@mtkbuild whsys = WorkshopComponents.WheelSystem()
+
+@mtkbuild sys = WorkshopComponents.MassSpringDamperTest()
 u0 = []
 tspan = [0.0,4.0]
-prob = ODEProblem(whsys, u0, tspan)
-sol  = solve(prob; dtmax = 0.1)
+prob = ODEProblem(sys, u0, tspan)
+sol  = solve(prob)
+
 using Plots
 plot(sol)
-plot(sol; idxs=whsys.road.o, label= "wsys.road.o")
-plot!(sol; idxs=whsys.wheel.port_sd.s, label= "whsys.wheel.port_sd.s")
-plot!(sol; idxs=whsys.wheel.port_m.s, label= "whsys.wheel.port_m.s")
+plot!(sol; idxs=sys.ground.flange_a.s, label = "sys.ground.flange_a.s")
+savefig("MassSpringDamper.png")
+
+
+
+# ------------------------------WheelSys-------------------------------- #
+
+
+using WorkshopComponents
+using ModelingToolkit, OrdinaryDiffEq
+
+@mtkbuild sys = WorkshopComponents.WheelSystem()
+u0 = []
+tspan = [0.0, 20.0]
+prob = ODEProblem(sys, u0, tspan)
+sol  = solve(prob, dtmax = 0.001)
+
+using Plots
+plot(sol)
+plot!(sol; idxs=sys.ground.flange_a.s, label = "sys.ground.flange_a.s")
+savefig("WheelSystem_20s.png")
+
+
+
 
 # ---------------------------------System------------------------------- #
+
+
+
+
+
+
 
 using WorkshopComponents
 using ModelingToolkit, OrdinaryDiffEq
@@ -109,12 +127,26 @@ plot!(sol; idxs=sys.carbody.body.s, label= "sys.carbody.body.s")
 plot!(sol; idxs=sys.seat.body.s, label= "sys.seat.body.s")
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # ---------------------------------------------------------------------- #
 
 using WorkshopComponents
 using ModelingToolkit, OrdinaryDiffEq
 
-@mtkbuild sys = WorkshopComponents.MassSpringDamper()
+@mtkbuild sys = WorkshopComponents.WheelSystem()
 u0 = []
 tspan = [0.0,4.0]
 prob = ODEProblem(sys, u0, tspan)
@@ -122,15 +154,8 @@ sol  = solve(prob)
 
 using Plots
 plot(sol)
-plot!(sol; idxs=sys.ground.flange.s, label = "sys.ground.flange.s")
-plot!(sol; idxs=sys.spring.flange_a.f, label = "sys.spring.flange_a.f")
-
-plot(sol; idxs=sys.road.u, label= "sys.road.s.u")
-plot!(sol; idxs=sys.wheel.body.s, label= "sys.wheel.body.s")
-plot!(sol; idxs=sys.carbody.body.s, label= "sys.carbody.body.s")
-plot!(sol; idxs=sys.seat.body.s, label= "sys.seat.body.s")
-
-savefig("MassSpringDamper.png")
+plot!(sol; idxs=sys.ground.flange_a.s, label = "sys.ground.flange_a.s")
+savefig("WheelSystem.png")
 
 
 # ---------------------------------------------------------------------- #
@@ -170,7 +195,7 @@ plot!(sol; idxs=sys.body.v, label = "sys.body.v")
 plot!(sol; idxs=sys.body.a, label = "sys.body.a")
 
 plot!(sol; idxs=sys.ground.out, label = "sys.ground.out")
-plot!(sol; idxs=sys.spring.flange_a.f, label="sys.spring.flange_a.f")
+plot!(sol; idxs=sys.wheel.spring.flange_a.f, label="sys.wheel.spring.flange_a.f")
 plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")
 #=
     initial body.s = initial_position
@@ -178,7 +203,7 @@ plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")
     initial body.a = 0.0
 =#
 #=
-    flange.s =  ifelse(mod(t, loop) < offset,
+    flange_a.s =  ifelse(mod(t, loop) < offset,
                 0.0,
                 ifelse(mod(t,loop)-offset > freq,
                     0.0,
@@ -186,4 +211,7 @@ plot!(sol; idxs=sys.body.flange.f, label = "sys.body.flange.f")
                 )
             )
 
+=#
+#=
+    flange_a.s = ifelse(t<0.5, 0.0, (t-0.5)/4)
 =#

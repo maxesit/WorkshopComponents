@@ -6,7 +6,10 @@
 
 
 include("Damper_experiment.jl")
+include("FixedGround_experiment.jl")
 include("Ground_experiment.jl")
 include("Mass_experiment.jl")
 include("MassSpringDamper_experiment.jl")
+include("MassSpringDamperTest_experiment.jl")
 include("Spring_experiment.jl")
+include("WheelSystem_experiment.jl")

@@ -1,19 +1,18 @@
 # Linear 1D translational spring
 
 component Spring
-    flange_a = Flange()
-    flange_b = Flange()
+  flange_a = Flange()
+  flange_b = Flange()
     
-    # Unstretched spring length
-    parameter s_rel0::Distance = 0.5
-    parameter c::TranslationalSpringConstant = 1M
+  # Unstretched spring length
+  parameter s_rel0::Distance = 0.5
+  parameter c::TranslationalSpringConstant = 1M
 
-    variable s_rel::Distance
-    variable f::JSML.Force
-
+  variable s_rel::Distance
+  variable f::JSML.Force
 relations
-    s_rel = flange_a.s - flange_b.s
-    f = c * (s_rel - s_rel0)
-    flange_b.f = -f
-    flange_a.f = f
+  s_rel = flange_a.s - flange_b.s
+  f = c * (s_rel - s_rel0)
+  flange_b.f = -f
+  flange_a.f = f
 end

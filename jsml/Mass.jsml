@@ -1,21 +1,20 @@
 # Sliding mass
 
 component Mass
-    flange_a = Flange()
-    flange_b = Flange()
+  flange_a = Flange()
+  flange_b = Flange()
 
-    parameter L::Length = 0
-    parameter m::JSML.Mass = 1
+  parameter L::Length = 0
+  parameter m::JSML.Mass = 1
 
-    # Center of mass
-    variable s::Position
-    variable v::Velocity
-    variable a::Acceleration
-
+  # Center of mass
+  variable s::Position
+  variable v::Velocity
+  variable a::Acceleration
 relations
-    flange_a.s = s + L/2
-    flange_b.s = s - L/2
-    v = der(s)
-    a = der(v)
-    m*a = flange_a.f + flange_b.f
+  flange_a.s = s + L/2
+  flange_b.s = s - L/2
+  v = der(s)
+  a = der(v)
+  m*a = flange_a.f + flange_b.f
 end

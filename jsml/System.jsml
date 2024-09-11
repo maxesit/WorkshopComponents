@@ -1,13 +1,12 @@
 # Complete vehicle system
 
 component System
-    seat = MassSpringDamper(initial_pos = 1.5, spring_height = 0.5)
-    chassis = MassSpringDamper(initial_pos = 1.0, spring_height = 0.5)
-    wheel = MassSpringDamper(initial_pos = 0.5, spring_height = 0.5)
-    ground = Ground()
-
+  seat = MassSpringDamper(initial_pos = 1.5, spring_height = 0.5)
+  chassis = MassSpringDamper(initial_pos = 1.0, spring_height = 0.5)
+  wheel = MassSpringDamper(initial_pos = 0.5, spring_height = 0.5)
+  ground = Ground()
 relations 
-    connect(ground.flange_a, wheel.flange_b)
-    connect(wheel.flange_a, chassis.flange_b)
-    connect(chassis.flange_a, seat.flange_b)
+  connect(ground.flange_a, wheel.flange_b)
+  connect(wheel.flange_a, chassis.flange_b)
+  connect(chassis.flange_a, seat.flange_b)
 end

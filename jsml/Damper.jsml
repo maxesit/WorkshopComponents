@@ -1,24 +1,23 @@
 # Linear 1D translational damper
 
 component Damper
-    flange_a = Flange()
-    flange_b = Flange()
+  flange_a = Flange()
+  flange_b = Flange()
+  parameter d::DampingCoefficient
+  variable lossPower::Power
 
-    parameter d::DampingCoefficient
+  # Relative distance (= flange_b.s - flange_a.s)
+  variable s_rel::Distance
 
-    variable lossPower::Power
+  # Relative velocity (= der(s_rel))
+  variable v_rel::Velocity
 
-    # Relative distance (= flange_b.s - flange_a.s)
-    variable s_rel::Distance
-    # Relative velocity (= der(s_rel))
-    variable v_rel::Velocity
-    # Forces between flanges (= flange_b.f)
-    variable f::JSML.Force
-
+  # Forces between flanges (= flange_b.f)
+  variable f::JSML.Force
 relations
-    s_rel = flange_a.s - flange_b.s
-    v_rel = der(s_rel)
-    f = d * v_rel
-    flange_b.f = -f
-    flange_a.f = f
+  s_rel = flange_a.s - flange_b.s
+  v_rel = der(s_rel)
+  f = d * v_rel
+  flange_b.f = -f
+  flange_a.f = f
 end

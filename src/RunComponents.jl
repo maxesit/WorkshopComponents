@@ -4,7 +4,7 @@ Pkg.instantiate()
 # ----------------------------VanDerPol-------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, OrdinaryDiffEq
+using ModelingToolkit, OrdinaryDiffEqDefault
 
 @mtkbuild vdp = WorkshopComponents.VanDerPol()
 u0 = [
@@ -20,7 +20,7 @@ plot(sol)
 # --------------------------------SIR----------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, OrdinaryDiffEq
+using ModelingToolkit, OrdinaryDiffEqDefault
 
 @mtkbuild sir = WorkshopComponents.SIR()
 u0 = [
@@ -37,16 +37,14 @@ plot(sol)
 # ----------------------------SpringDamper------------------------------ #
 
 using WorkshopComponents
-using ModelingToolkit, OrdinaryDiffEq
+using ModelingToolkit, OrdinaryDiffEqDefault
 
-@mtkbuild epi = WorkshopComponents.Epidemiology()
+@mtkbuild sd = WorkshopComponents.SpringDamper()
 u0 = [
-    epi.x      =>  0.0,
-    epi.x_dot  =>  0.0,
-    epi.x_ddot =>  0.0
+    sd.x      =>  0.0,
 ]
 tspan = [0.0,0.009]
-prob = ODEProblem(epi, u0, tspan)
+prob = ODEProblem(sd, u0, tspan)
 sol  = solve(prob)
 using Plots
 plot(sol)
@@ -54,7 +52,7 @@ plot(sol)
 # ---------------------------------MSD---------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, OrdinaryDiffEq
+using ModelingToolkit, OrdinaryDiffEqDefault
 
 @mtkbuild sys = WorkshopComponents.MassSpringDamperTest()
 u0 = []
@@ -70,7 +68,7 @@ savefig("MassSpringDamper.png")
 # -----------------------------WheelSystem------------------------------ #
 
 using WorkshopComponents
-using ModelingToolkit, OrdinaryDiffEq
+using ModelingToolkit, OrdinaryDiffEqDefault
 
 @mtkbuild sys = WorkshopComponents.WheelSystem()
 u0 = []
@@ -86,7 +84,7 @@ savefig("WheelSystem_20s.png")
 # --------------------------------System-------------------------------- #
 
 using WorkshopComponents
-using ModelingToolkit, OrdinaryDiffEq
+using ModelingToolkit, OrdinaryDiffEqDefault
 
 @mtkbuild sys = WorkshopComponents.System()
 u0 = []

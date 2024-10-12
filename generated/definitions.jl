@@ -7,7 +7,7 @@
 
 using ModelingToolkit
 using ModelingToolkit: t_nounits as t
-using OrdinaryDiffEq
+using OrdinaryDiffEqDefault
 using RuntimeGeneratedFunctions
 RuntimeGeneratedFunctions.init(@__MODULE__)
 

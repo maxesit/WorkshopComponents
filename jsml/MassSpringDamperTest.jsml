@@ -11,4 +11,19 @@ relations
   initial body.flange_b.f = 0.0
   connect(spring.flange_a, damper.flange_a, body.flange_b)
   connect(spring.flange_b, damper.flange_b, ground.flange)
+metadata {
+  "JuliaSim" : {
+    "tests" : {
+      "case1" : {
+        "stop" : 4.0,
+        "expect" : {
+          "final" : {
+            "body.flange_b.s" : "0.5",
+            "spring.flange_b.s" : "0.0"
+          }
+        }
+      }
+    }
+  }
+}
 end

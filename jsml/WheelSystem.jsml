@@ -5,4 +5,20 @@ component WheelSystem
   ground = Ground()
 relations 
   connect(wheel.flange_b, ground.flange_a)
+metadata {
+  "JuliaSim" : {
+    "tests" : {
+      "case1" : {
+        "dtmax" : 0.001,
+        "stop" : 20.0,
+        "expect" : {
+          "final" : {
+            "wheel.flange_a.s" : "0.5",
+            "wheel.flange_b.s" : "0.0"
+          }
+        }
+      }
+    }
+  }
+}
 end

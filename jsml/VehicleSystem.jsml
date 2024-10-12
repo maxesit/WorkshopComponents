@@ -1,6 +1,6 @@
 # Complete vehicle system
 
-component System
+component VehicleSystem
   seat = MassSpringDamper(initial_pos = 1.5, spring_height = 0.5)
   chassis = MassSpringDamper(initial_pos = 1.0, spring_height = 0.5)
   wheel = MassSpringDamper(initial_pos = 0.5, spring_height = 0.5)
@@ -9,4 +9,18 @@ relations
   connect(ground.flange_a, wheel.flange_b)
   connect(wheel.flange_a, chassis.flange_b)
   connect(chassis.flange_a, seat.flange_b)
+metadata {
+  "JuliaSim" : {
+    "tests" : {
+      "case1" : {
+        "stop" : 20.0,
+        "expect" : {
+          "final" : {
+            "wheel.flange_a.s" : "0.5"
+          }
+        }
+      }
+    }
+  }
+}
 end

@@ -4,4 +4,11 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
-
+@testset "Running test case1 for SpringDamper" begin
+  @mtkbuild model = SpringDamper()
+  u0 = [model.x => 0]
+  prob = ODEProblem(model, u0, (0, 0.009))
+  sol = solve(prob, DefaultODEAlgorithm())
+  @test SciMLBase.successful_retcode(sol)
+  @test sol[model.x][end] ≈ 0.0999872575354305
+end

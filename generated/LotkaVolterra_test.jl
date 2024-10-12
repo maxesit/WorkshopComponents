@@ -4,4 +4,12 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
-
+@testset "Running test case1 for LotkaVolterra" begin
+  @mtkbuild model = LotkaVolterra()
+  u0 = [model.x => 1, model.y => 1]
+  prob = ODEProblem(model, u0, (0, 10))
+  sol = solve(prob, DefaultODEAlgorithm())
+  @test SciMLBase.successful_retcode(sol)
+  @test sol[model.x][end] ≈ 1.033758136076716
+  @test sol[model.y][end] ≈ 0.9063703719110758
+end

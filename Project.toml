@@ -1,7 +1,7 @@
 name = "WorkshopComponents"
 uuid = "a8f4153b-234a-49f2-adcf-bf0027f9e260"
 authors = ["Marko Polic marko.polic@juliahub.com, JuliaHub Inc."]
-version = "0.0.1"
+version = "0.0.2"
 
 [deps]
 DynamicQuantities = "06fc5a27-2a28-4c7c-a15d-362465fb6821"

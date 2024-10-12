@@ -5,4 +5,23 @@ component VanDerPol
 relations
   der(y) = mu*((1-x^2)*y-x)
   der(x) = y
+metadata {
+  "JuliaSim" : {
+    "tests" : {
+      "case1" : {
+        "initial" :{
+            "x" : -2.0,
+            "y" : 1.0
+          },
+        "stop" : 6.3,
+        "expect" : {
+          "final" : {
+            "x" : "-1.9870379786683106",
+            "y" : "0.26239909415305135"
+          }
+        }
+      }
+    }
+  }
+}
 end

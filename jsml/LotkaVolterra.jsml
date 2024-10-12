@@ -8,4 +8,23 @@ component LotkaVolterra
 relations
   der(x) = a * x - b * x * y
   der(y) = -c * y + d * x * y
+metadata {
+  "JuliaSim" : {
+    "tests" : {
+      "case1" : {
+        "stop" : 10.0,
+        "initial" : {
+          "x" : 1.0,
+          "y" : 1.0
+        },
+        "expect" : {
+          "final" : {
+            "x" : "1.033758136076716",
+            "y" : "0.9063703719110758"
+          }
+        }
+      }
+    }
+  }
+}
 end

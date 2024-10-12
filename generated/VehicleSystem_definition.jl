@@ -5,11 +5,11 @@
 
 
 """
-   System(; name)
+   VehicleSystem(; name)
 
 Complete vehicle system
 """
-@component function System(; name)
+@component function VehicleSystem(; name)
   systems = @named begin
     seat = MassSpringDamper(initial_pos=1.5, spring_height=0.5)
     chassis = MassSpringDamper(initial_pos=1, spring_height=0.5)
@@ -23,8 +23,8 @@ Complete vehicle system
   ]
   return ODESystem(eqs, t, [], []; systems, name)
 end
-export System
-Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(System)) = print(io,
+export VehicleSystem
+Base.show(io::IO, a::MIME"image/svg+xml", t::typeof(VehicleSystem)) = print(io,
   """<div style="height: 100%; width: 100%; background-color: white"><div style="margin: auto; height: 500px; width: 500px; padding: 200px"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000"
     overflow="visible" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <defs>

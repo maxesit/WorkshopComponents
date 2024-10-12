@@ -8,4 +8,25 @@ relations
   der(S) = -beta*S*I
   der(I) = beta*S*I-gamma*I
   der(R) = gamma*I
+metadata {
+  "JuliaSim" : {
+    "tests" : {
+      "case1" : {
+        "initial" :{
+            "S" : 10000.0,
+            "I" : 50.0,
+            "R" : 0.0
+          },
+        "stop" : 20.0,
+        "expect" : {
+          "final" : {
+            "S" : "103.54198741987338",
+            "I" : "807.8752380616771",
+            "R" : "9138.58277451845"
+          }
+        }
+      }
+    }
+  }
+}
 end

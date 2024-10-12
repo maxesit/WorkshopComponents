@@ -4,12 +4,11 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
-@testset "Running test case1 for WheelSystem" begin
-  @mtkbuild model = WheelSystem()
+@testset "Running test case1 for VehicleSystem" begin
+  @mtkbuild model = VehicleSystem()
   u0 = []
   prob = ODEProblem(model, u0, (0, 20))
   sol = solve(prob, DefaultODEAlgorithm())
   @test SciMLBase.successful_retcode(sol)
   @test sol[model.wheel.flange_a.s][end] ≈ 0.5
-  @test sol[model.wheel.flange_b.s][end] ≈ 0.0
 end

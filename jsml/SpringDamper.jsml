@@ -9,4 +9,21 @@ relations
   der(x) = x_dot
   der(x_dot) = x_ddot
   F = d*x_dot+k*x
+metadata {
+  "JuliaSim" : {
+    "tests" : {
+      "case1" : {
+        "initial" :{
+            "x" : 0.0
+          },
+        "stop" : 0.009,
+        "expect" : {
+          "final" : {
+            "x" : "0.0999872575354305"
+          }
+        }
+      }
+    }
+  }
+}
 end

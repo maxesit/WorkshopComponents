@@ -4,4 +4,12 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
-
+@testset "Running test case1 for MassSpringDamperTest" begin
+  @mtkbuild model = MassSpringDamperTest()
+  u0 = []
+  prob = ODEProblem(model, u0, (0, 4))
+  sol = solve(prob, DefaultODEAlgorithm())
+  @test SciMLBase.successful_retcode(sol)
+  @test sol[model.body.flange_b.s][end] ≈ 0.5
+  @test sol[model.spring.flange_b.s][end] ≈ 0.0
+end

@@ -1,7 +1,7 @@
 using WorkshopComponents
 using ModelingToolkit, OrdinaryDiffEq
 
-@mtkbuild sys = WorkshopComponents.System()
+@mtkbuild sys = WorkshopComponents.VehicleSystem()
 u0 = []
 tspan = [0.0, 20.0]
 prob = ODEProblem(sys, u0, tspan)

@@ -4,4 +4,13 @@
 ### Instead, update the JSML source code and regenerate this file
 
 
-
+@testset "Running test case1 for SIR" begin
+  @mtkbuild model = SIR()
+  u0 = [model.S => 10000, model.I => 50, model.R => 0]
+  prob = ODEProblem(model, u0, (0, 20))
+  sol = solve(prob, DefaultODEAlgorithm())
+  @test SciMLBase.successful_retcode(sol)
+  @test sol[model.S][end] ≈ 103.54198741987338
+  @test sol[model.I][end] ≈ 807.8752380616771
+  @test sol[model.R][end] ≈ 9138.58277451845
+end
